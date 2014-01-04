@@ -103,6 +103,10 @@ public class BSTNode extends Node {
         return level;
     }
 
+    public void access() {
+        // For cache purposes
+    }
+
     public boolean isRoot() {
         return getParent() == null;
     }
@@ -233,7 +237,7 @@ public class BSTNode extends Node {
         drawTree2(v);
     }
 
-    private void drawTree2(View v) {
+	protected void drawTree2(View v) {
         if (state != INVISIBLE && parent != null) {
             v.setColor(Color.black);
             v.drawLine(x, y, parent.x, parent.y);

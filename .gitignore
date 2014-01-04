@@ -11,3 +11,5 @@ bin/
 !algvis-format.xml
 !algvis-profile.xml
 *.iml
+out/*
+.idea/*

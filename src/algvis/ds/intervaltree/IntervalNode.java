@@ -136,7 +136,7 @@ public class IntervalNode extends BSTNode {
     private static final NodeColor WAIT = new NodeColor(Color.BLACK, new Color(
         0xFFFFFF));
 
-    private void drawTree2(View v) {
+	protected void drawTree2(View v) {
         switch (focused) {
         case TIN:
             this.setColor(IN);

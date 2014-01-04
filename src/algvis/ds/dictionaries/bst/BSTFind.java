@@ -59,6 +59,7 @@ public class BSTFind extends Algorithm {
             addStep(w, REL.BOTTOM, "bstfindstart");
             pause();
             while (true) {
+                w.access();
                 if (w.getKey() == K) {
                     v.goTo(w);
                     addStep(w, REL.BOTTOM, "found");
