@@ -52,6 +52,8 @@ public class OrderedFile extends BST {
             for (int j = 0; j < leafSize; j++) {
                 leaf.setElement(j, elements[i+j]);
             }
+
+            leaf.setLeafOffset(nodes.size());
             nodes.add(leaf);
         }
 
