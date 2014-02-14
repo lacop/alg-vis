@@ -39,10 +39,6 @@ public class OrderedFileNode extends BSTNode {
 
     @Override
     public Color getBgColor() {
-        if (isLeaf()) {
-            return super.getBgColor();
-        }
-
         if (getDensity() < ((OrderedFile)D).thresholdSparse(height) ||
             getDensity() > ((OrderedFile)D).thresholdDense(height)) {
             return Color.red;
