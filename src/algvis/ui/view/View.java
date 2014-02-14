@@ -247,7 +247,7 @@ public class View implements MouseListener, MouseMotionListener,
         g.fillRect((int) (x - a), (int) (y - b), (int) (2 * a), (int) (2 * b));
     }
 
-    void drawRect(double x, double y, double a, double b) {
+	public void drawRect(double x, double y, double a, double b) {
         g.drawRect((int) (x - a), (int) (y - b), (int) (2 * a), (int) (2 * b));
     }
 
