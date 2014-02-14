@@ -18,6 +18,7 @@ public class OrderedFile extends BST {
     public void draw(View V) {
         if (root != null) {
             root.drawTree(V);
+            root.drawThresholds(V);
         }
     }
 
@@ -78,12 +79,12 @@ public class OrderedFile extends BST {
         int depth = root.height - height;
 
         // 1/2 at root, 1/4 at leaves
-        return 0.5 - 0.25*((double)depth / root.height);
+        return 0.5 - 0.25*((double)depth / (root.height - 1));
     }
     public double thresholdDense(int height) {
         int depth = root.height - height;
 
         // 3/4 at root, 1 at leaves
-        return 0.75 + 0.25*((double)depth / root.height);
+        return 0.75 + 0.25*((double)depth / (root.height - 1));
     }
 }
