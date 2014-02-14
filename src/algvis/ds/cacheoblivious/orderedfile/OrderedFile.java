@@ -27,6 +27,11 @@ public class OrderedFile extends BST {
         return dsName;
     }
 
+    @Override
+    public BSTNode getRoot() {
+        return root;
+    }
+
     public OrderedFile(VisPanel panel) {
         super(panel);
 
@@ -69,8 +74,16 @@ public class OrderedFile extends BST {
         root = nodes.get(0);
     }
 
-    @Override
-    public BSTNode getRoot() {
-        return root;
+    public double thresholdSparse(int height) {
+        int depth = root.height - height;
+
+        // 1/2 at root, 1/4 at leaves
+        return 0.5 - 0.25*((double)depth / root.height);
+    }
+    public double thresholdDense(int height) {
+        int depth = root.height - height;
+
+        // 3/4 at root, 1 at leaves
+        return 0.75 + 0.25*((double)depth / root.height);
     }
 }

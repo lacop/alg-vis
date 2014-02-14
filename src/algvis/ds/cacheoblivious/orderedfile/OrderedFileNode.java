@@ -7,26 +7,27 @@ import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ui.Fonts;
 import algvis.ui.view.View;
 
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public class OrderedFileNode extends BSTNode {
 
     private int leafSize;
-    private boolean[] leafOccupied;
+    //private boolean[] leafOccupied;
     private int[] leafElements;
 
     public OrderedFileNode (DataStructure D, int leafSize) {
         super(D, Node.NOKEY, ZDepth.NODE);
 
         this.leafSize = leafSize;
-        leafOccupied = new boolean[leafSize];
+        //leafOccupied = new boolean[leafSize];
         leafElements = new int[leafSize];
     }
 
     static final double leafElementRadius = Node.RADIUS;
 
     public void setElement(int i, int val) {
-        leafOccupied[i] = true;
+        //leafOccupied[i] = true;
         leafElements[i] = val;
     }
 
@@ -35,6 +36,20 @@ public class OrderedFileNode extends BSTNode {
         return 42;
     } */
 
+
+    @Override
+    public Color getBgColor() {
+        if (isLeaf()) {
+            return super.getBgColor();
+        }
+
+        if (getDensity() < ((OrderedFile)D).thresholdSparse(height) ||
+            getDensity() > ((OrderedFile)D).thresholdDense(height)) {
+            return Color.red;
+        } else {
+            return Color.green;
+        }
+    }
 
     @Override
     protected void drawBg(View v) {
@@ -60,13 +75,12 @@ public class OrderedFileNode extends BSTNode {
     @Override
     protected void drawKey(View v) {
         if (!isLeaf()) {
-            super.drawKey(v);
-            return;
-        }
-
-        double cellX = x - (leafSize - 1)*leafElementRadius;
-        for (int i = 0; i < leafSize; i++) {
-            v.drawString("" + leafElements[i], cellX + 2 * i * leafElementRadius, y, Fonts.NORMAL);
+            v.drawString("" + getDensity(), x, y, Fonts.NORMAL);
+        } else {
+            double cellX = x - (leafSize - 1)*leafElementRadius;
+            for (int i = 0; i < leafSize; i++) {
+                v.drawString("" + leafElements[i], cellX + 2 * i * leafElementRadius, y, Fonts.NORMAL);
+            }
         }
     }
 
@@ -81,15 +95,21 @@ public class OrderedFileNode extends BSTNode {
         leftw = rightw = (int)(leafSize*leafElementRadius) + DataStructure.minsepx/2;
     }
 
-    /*
-    @Override
-    public Rectangle2D getBoundingBox() {
+    public double getDensity() {
         if (!isLeaf()) {
-            return super.getBoundingBox();
+            double total = 0;
+            total += ((OrderedFileNode) getLeft()).getDensity();
+            total += ((OrderedFileNode) getRight()).getDensity();
+            return total/2;
         }
 
-        double horRadius = leafElementRadius * leafSize;
-        return new Rectangle2D.Double(x - horRadius, y - leafElementRadius, 2 * horRadius, 2 * leafElementRadius);
-    }                 */
+        int full = 0;
+        for (int i = 0; i < leafSize; i++) {
+            // TODO proper occupied status, allow inserting zero
+            if (leafElements[i] != 0) full++;
+        }
+
+        return (double)full/leafSize;
+    }
 
 }
