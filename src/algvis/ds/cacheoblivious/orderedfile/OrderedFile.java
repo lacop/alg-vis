@@ -37,12 +37,14 @@ public class OrderedFile extends BST {
         super(panel);
 
         // TODO autosize etc
-        initialize(2, new int[] {1, 0, 2, 0, 3, 0, 4, 0});
+        initialize(4, new int[] {1, 0, 2, 0, 3, 0, 4, 0, 5, 0, 6, 0, 7, 0, 8, 0});
+        //initialize(2, new int[] {1, 0, 2, 0, 3, 0, 4, 0});
         reposition();
     }
 
-    int leafSize;
-    ArrayList<OrderedFileNode> leaves;
+    // TODO private + getters
+    public int leafSize;
+    public ArrayList<OrderedFileNode> leaves;
 
     private void initialize(int leafSize, int[] elements) {
         // Generate leaf nodes
@@ -68,7 +70,7 @@ public class OrderedFile extends BST {
             for (int i = 0; i < nodes.size(); i += 2) {
                 OrderedFileNode parent = new OrderedFileNode(this, leafSize);
                 parent.linkLeft(nodes.get(i));
-                parent.linkRight(nodes.get(i+1));
+                parent.linkRight(nodes.get(i + 1));
                 merged.add(parent);
             }
             nodes = merged;
@@ -88,5 +90,9 @@ public class OrderedFile extends BST {
 
         // 3/4 at root, 1 at leaves
         return 0.75 + 0.25*((double)depth / (root.height - 1));
+    }
+
+    public void insert(int pos, int value) {
+        start(new OrderedFileInsert(this, pos, value));
     }
 }

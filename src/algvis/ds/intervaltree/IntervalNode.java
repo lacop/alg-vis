@@ -42,7 +42,7 @@ public class IntervalNode extends BSTNode {
         TWAIT // iba obvod obdlznika
     }
 
-    focusType focused;
+	public focusType focused;
     private boolean markedColor = false;
 
     public IntervalNode(DataStructure D, int key, int zDepth) {

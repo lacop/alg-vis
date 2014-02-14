@@ -9,6 +9,8 @@ import algvis.ui.view.View;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.util.*;
+import java.util.List;
 
 public class OrderedFileNode extends BSTNode {
 
@@ -26,7 +28,7 @@ public class OrderedFileNode extends BSTNode {
 
     static final double leafElementRadius = Node.RADIUS;
 
-    private int offset;
+    int offset;
     public void setLeafOffset(int i) {
         offset = i;
     }
@@ -41,14 +43,18 @@ public class OrderedFileNode extends BSTNode {
         return 42;
     } */
 
+    public boolean densityWithinThresholds() {
+        return getDensity() >= ((OrderedFile)D).thresholdSparse(height) &&
+               getDensity() <= ((OrderedFile)D).thresholdDense(height) &&
+               getDensity() < 1; // TODO hack to make sure we can always insert into leaf, avoid?
+    }
 
     @Override
     public Color getBgColor() {
-        if (getDensity() < ((OrderedFile)D).thresholdSparse(height) ||
-            getDensity() > ((OrderedFile)D).thresholdDense(height)) {
-            return Color.red;
-        } else {
+        if (densityWithinThresholds()) {
             return Color.green;
+        } else {
+            return Color.red;
         }
     }
 
@@ -84,6 +90,7 @@ public class OrderedFileNode extends BSTNode {
                 v.drawString("" + leafElements[i], cellX + 2 * i * leafElementRadius, y, Fonts.NORMAL);
 
                 // Draw index underneath
+                // TODO should really draw indices in between or have one more at start/end, to allow inserting anywhere
                 v.drawString("" + (i + offset*leafSize), cellX + 2 * i * leafElementRadius, y + leafElementRadius*2, Fonts.TYPEWRITER);
             }
         }
@@ -130,4 +137,66 @@ public class OrderedFileNode extends BSTNode {
         }
     }
 
+    public void insertAtPos(int pos, int value) {
+        // TODO for now we prepend new value when conflicting, use in between indices for any position
+        int oldpos = 0;
+        int newpos = 0;
+
+        int[] elements = leafElements.clone();
+
+        while (newpos < leafSize) {
+            if (oldpos >= pos && pos >= 0) {
+                leafElements[newpos] = value;
+                pos = -1;
+            } else {
+                while (oldpos < leafSize && elements[oldpos] == 0) oldpos++;
+
+                if (oldpos >= leafSize) leafElements[newpos] = 0;
+                else leafElements[newpos] = elements[oldpos];
+
+                oldpos++;
+            }
+
+            newpos++;
+        }
+
+    }
+
+    public void insertElemenets(ArrayList<Integer> elements) {
+        if (isLeaf()) {
+            for(int i = 0; i < leafSize; i++) {
+                if (leafElements[i] != 0) {
+                    elements.add(leafElements[i]);
+                }
+            }
+        } else {
+            // In order, left before right
+            ((OrderedFileNode) getLeft()).insertElemenets(elements);
+            ((OrderedFileNode) getRight()).insertElemenets(elements);
+        }
+    }
+
+    public void getLeaves(ArrayList<OrderedFileNode> leaves) {
+        if (isLeaf()) {
+            leaves.add(this);
+        } else {
+            ((OrderedFileNode) getLeft()).getLeaves(leaves);
+            ((OrderedFileNode) getRight()).getLeaves(leaves);
+        }
+    }
+
+    public void insertEvenly(List<Integer> elements) {
+        // TODO for now just insert at beginning
+
+        // Clear
+        for(int i = 0; i < leafSize; i++) {
+            leafElements[i] = 0;
+        }
+
+        // Insert in order from beginning
+        int i = 0;
+        for(Integer el : elements) {
+            leafElements[i++] = el;
+        }
+    }
 }
