@@ -186,17 +186,25 @@ public class OrderedFileNode extends BSTNode {
     }
 
     public void insertEvenly(List<Integer> elements) {
-        // TODO for now just insert at beginning
+        if (isLeaf()) {
+            // TODO for now just insert at beginning
+            // TODO assert it will fit
 
-        // Clear
-        for(int i = 0; i < leafSize; i++) {
-            leafElements[i] = 0;
-        }
+            // Clear
+            for(int i = 0; i < leafSize; i++) {
+                leafElements[i] = 0;
+            }
 
-        // Insert in order from beginning
-        int i = 0;
-        for(Integer el : elements) {
-            leafElements[i++] = el;
+            // Insert in order from beginning
+            int i = 0;
+            for(Integer el : elements) {
+                leafElements[i++] = el;
+            }
+        } else {
+            // Split in half, insert evenly into subtrees
+            int half = elements.size() / 2;
+            ((OrderedFileNode) getLeft()).insertEvenly(elements.subList(0, half));
+            ((OrderedFileNode) getRight()).insertEvenly(elements.subList(half, elements.size()));
         }
     }
 }

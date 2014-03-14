@@ -6,6 +6,8 @@ import algvis.ui.VisPanel;
 import algvis.ui.view.View;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class OrderedFile extends BST {
 
@@ -36,9 +38,8 @@ public class OrderedFile extends BST {
     public OrderedFile(VisPanel panel) {
         super(panel);
 
-        // TODO autosize etc
-        initialize(4, new int[] {1, 0, 2, 0, 3, 0, 4, 0, 5, 0, 6, 0, 7, 0, 8, 0});
-        //initialize(2, new int[] {1, 0, 2, 0, 3, 0, 4, 0});
+        initialize(new ArrayList(Arrays.asList(new Integer[]{1, 2, 3, 4})));
+
         reposition();
     }
 
@@ -46,23 +47,35 @@ public class OrderedFile extends BST {
     public int leafSize;
     public ArrayList<OrderedFileNode> leaves;
 
-    private void initialize(int leafSize, int[] elements) {
-        // Generate leaf nodes
-        ArrayList<OrderedFileNode> nodes = new ArrayList<OrderedFileNode>();
-        for (int i = 0; i < elements.length; i += leafSize) {
-            OrderedFileNode leaf = new OrderedFileNode(this, leafSize);
-            for (int j = 0; j < leafSize; j++) {
-                leaf.setElement(j, elements[i+j]);
-            }
+    private void initialize(List<Integer> elements) {
+        // TODO check this math, optimize?
 
+        // Find parameters - leaf size, leaf count, ...
+
+        // At least two elements in leaf
+        int leafSize = 2;
+        // Compute base-2 log of number of elements (no float rounding errors)
+        for(int e = elements.size(); e > 4; leafSize++, e /= 2);
+
+        // TODO optimal starting value?
+        final int oneOverDensity = 2; // Density will be at most 1/2 at leafs
+        // Leaf count is smallest power of two for which the elements
+        // can be stored with the desired density
+        int leafCount = 2;
+        while (leafCount*leafSize < elements.size()*oneOverDensity) {
+            leafCount *= 2;
+        }
+
+        // Generate empty leaf nodes
+        ArrayList<OrderedFileNode> nodes = new ArrayList<OrderedFileNode>();
+        for (int i = 0; i < leafCount; i++) {
+            OrderedFileNode leaf = new OrderedFileNode(this, leafSize);
             leaf.setLeafOffset(nodes.size());
             nodes.add(leaf);
         }
 
         this.leafSize = leafSize;
         leaves = nodes;
-
-        // TODO assumes power-of-two leafs for complete binary tree
 
         // Merge into tree
         while (nodes.size() > 1) {
@@ -77,6 +90,9 @@ public class OrderedFile extends BST {
         }
 
         root = nodes.get(0);
+
+        // Insert elements evenly
+        root.insertEvenly(elements);
     }
 
     public double thresholdSparse(int height) {
