@@ -48,7 +48,7 @@ public class OrderedFileInsert extends Algorithm {
         // Step 3 - Evenly rebalance interval
         ArrayList<Integer> elements = new ArrayList<Integer>();
         // Collect all elements in order
-        node.insertElemenets(elements);
+        node.insertElements(elements);
 
         // Get all leaves belonging to this interval
         ArrayList<OrderedFileNode> leaves = new ArrayList<OrderedFileNode>();

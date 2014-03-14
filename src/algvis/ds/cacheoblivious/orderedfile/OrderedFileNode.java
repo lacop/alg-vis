@@ -162,7 +162,7 @@ public class OrderedFileNode extends BSTNode {
 
     }
 
-    public void insertElemenets(ArrayList<Integer> elements) {
+    public void insertElements(ArrayList<Integer> elements) {
         if (isLeaf()) {
             for(int i = 0; i < leafSize; i++) {
                 if (leafElements[i] != 0) {
@@ -171,8 +171,8 @@ public class OrderedFileNode extends BSTNode {
             }
         } else {
             // In order, left before right
-            ((OrderedFileNode) getLeft()).insertElemenets(elements);
-            ((OrderedFileNode) getRight()).insertElemenets(elements);
+            ((OrderedFileNode) getLeft()).insertElements(elements);
+            ((OrderedFileNode) getRight()).insertElements(elements);
         }
     }
 
