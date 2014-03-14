@@ -39,15 +39,13 @@ public class OrderedFile extends BST {
         super(panel);
 
         initialize(new ArrayList(Arrays.asList(new Integer[]{1, 2, 3, 4})));
-
-        reposition();
     }
 
     // TODO private + getters
     public int leafSize;
     public ArrayList<OrderedFileNode> leaves;
 
-    private void initialize(List<Integer> elements) {
+    void initialize(List<Integer> elements) {
         // TODO check this math, optimize?
 
         // Find parameters - leaf size, leaf count, ...
@@ -93,6 +91,9 @@ public class OrderedFile extends BST {
 
         // Insert elements evenly
         root.insertEvenly(elements);
+
+        // Update layout
+        reposition();
     }
 
     public double thresholdSparse(int height) {

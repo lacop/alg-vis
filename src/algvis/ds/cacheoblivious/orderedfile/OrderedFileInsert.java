@@ -34,8 +34,15 @@ public class OrderedFileInsert extends Algorithm {
         while (!node.densityWithinThresholds()) {
             node = (OrderedFileNode) node.getParent();
             if (node == null) {
-                // Parent is unbalanced
-                // TODO double size
+                // Parent is unbalanced, double size
+
+                // Collect all elements in order
+                ArrayList<Integer> elements = new ArrayList<Integer>();
+                OF.root.insertElements(elements);
+
+                // TODO for prettier animation instead insert just new nodes and connect them
+                OF.initialize(elements);
+
                 return;
             }
         }
