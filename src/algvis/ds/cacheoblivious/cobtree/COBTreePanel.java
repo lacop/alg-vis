@@ -18,4 +18,18 @@ public class COBTreePanel extends VisPanel {
         scene.add(D);
         buttons = new DictButtons(this);
     }
+
+    @Override
+    public void start() {
+        super.start();
+
+        this.pauses = false;
+        ((COBTree) D).init(); // TODO cleanup
+        D.start(new Runnable() {
+            @Override
+            public void run() {
+                pauses = true;
+            }
+        });
+    }
 }
