@@ -21,7 +21,7 @@ public class StaticTree extends BST {
     // TODO abstract to CacheObliviousDS, selectable from panel
     public Cache cache = new SingleBlockCache(4, false);
 
-    protected StaticTree(VisPanel panel) {
+    public StaticTree(VisPanel panel) {
         super(panel);
     }
 
@@ -44,4 +44,13 @@ public class StaticTree extends BST {
 
         return sb.toString() + super.stats();
     }
+
+    public void fullInsert(int q, int offset) {
+        insert((q+1)/2 + offset);
+        if (q > 1) {
+            fullInsert(q/2, offset);
+            fullInsert(q/2, offset + (q+1)/2);
+        }
+    }
+
 }

@@ -25,7 +25,7 @@ public class StaticTreePanel extends VisPanel {
 
         // TODO visualize tree creation?
         this.pauses = false;
-        fullInsert(31, 0);
+        ((StaticTree) D).fullInsert(31, 0);
 
         // Pause after insert is complete
         D.start(new Runnable() {
@@ -34,13 +34,5 @@ public class StaticTreePanel extends VisPanel {
                 pauses = true;
             }
         });
-    }
-
-    private void fullInsert(int q, int offset) {
-        D.insert((q+1)/2 + offset);
-        if (q > 1) {
-            fullInsert(q/2, offset);
-            fullInsert(q/2, offset + (q+1)/2);
-        }
     }
 }
