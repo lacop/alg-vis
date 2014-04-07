@@ -227,16 +227,14 @@ public class OrderedFileNode extends BSTNode {
         super.repos();
 
         if (isLeaf()) {
+            // Align OF leaves under vEB leaves
             if (((OrderedFile)D).vEBtree != null) {
-                // TODO move x to line up with leaves better ?
-                BSTNode leaf = ((OrderedFile)D).vEBtree.getRoot();
-                if (leaf == null) return;
+                // Center each group
+                BSTNode left = ((OrderedFile) D).vEBtree.getLeafByOrder(offset*leafSize);
+                BSTNode right = ((OrderedFile) D).vEBtree.getLeafByOrder((offset + 1)*leafSize -1);
+                if (left == null || right == null) return;
 
-                while (leaf.getLeft() != null) {
-                    leaf = leaf.getLeft();
-                }
-
-                goTo(tox, leaf.toy - separationY);
+                goTo((left.tox + right.tox) / 2, left.toy - separationY);
             }
         } else {
             goTo(tox, getLeft().toy - separationY);

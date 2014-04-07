@@ -54,6 +54,10 @@ public class StaticTree extends BST {
     }
     
     public BSTNode getLeafByOrder(int i) {
+        if (getRoot() == null) {
+            return null;
+        }
+
         // Make sure node heights are correct
         getRoot().calcTree();
 
