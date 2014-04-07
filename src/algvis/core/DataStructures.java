@@ -19,7 +19,7 @@ package algvis.core;
 
 import java.lang.reflect.Constructor;
 
-import algvis.ds.cacheoblivious.btree.BTreePanel;
+import algvis.ds.cacheoblivious.cobtree.COBTreePanel;
 import algvis.ds.cacheoblivious.orderedfile.OrderedFilePanel;
 import algvis.ds.cacheoblivious.statictree.StaticTreePanel;
 import algvis.ds.dictionaries.aatree.AAPanel;
@@ -68,7 +68,7 @@ public class DataStructures {
         SkewHeapPanel.class, PairHeapPanel.class, BinHeapPanel.class,
         LazyBinHeapPanel.class, FibHeapPanel.class, UnionFindPanel.class,
         IntervalPanel.class, TriePanel.class, SuffixTreePanel.class,
-        StaticTreePanel.class, OrderedFilePanel.class, BTreePanel.class};
+        StaticTreePanel.class, OrderedFilePanel.class, COBTreePanel.class};
 
     public static final int N = PANEL.length;
 
@@ -204,7 +204,7 @@ public class DataStructures {
         case 25:
             return new OrderedFilePanel(S);
         case 26:
-            return new BTreePanel(S);
+            return new COBTreePanel(S);
         }
         if (!check_range(i)) {
             return null;

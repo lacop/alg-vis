@@ -49,6 +49,7 @@ public class AlgVis extends JPanel implements ActionListener {
      * ("fibheap") 20 - Union-find ("ufi") 21 - Interval tree ("intervaltree")
      * 22 - Trie ("trie") 23 - Suffix Tree ("suffixtree")
 	 * 24 - Static Cache-oblivious tree ("statictree"), 25 - Ordered File ("ordered file")
+	 * 26 - Cache-oblivious Btree ("cobtree")
 	 */
 	private final static int DEFAULT_DS = 25;
 
