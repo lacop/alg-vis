@@ -24,6 +24,8 @@ public class OrderedFileNode extends BSTNode {
         this.leafSize = leafSize;
         //leafOccupied = new boolean[leafSize];
         leafElements = new int[leafSize];
+
+        this.separationY *= ((OrderedFile) D).upsideDown ? -1 : 1;
     }
 
     static final double leafElementRadius = Node.RADIUS;

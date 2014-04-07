@@ -39,6 +39,9 @@ public class BSTNode extends Node {
     private int level; // distance to root
     private boolean thread = false; // is this node threaded?
 
+    // Vertical separation between levels
+    protected int separationY = DataStructure.minsepy;
+
     // statistics
     public int size = 1, height = 1, sumh = 1;
 
@@ -368,12 +371,12 @@ public class BSTNode extends Node {
         }
         if (getLeft() != null) {
             getLeft().goTo(this.tox - getLeft().rightw,
-                this.toy + DataStructure.minsepy);
+                this.toy + separationY);
             getLeft().repos();
         }
         if (getRight() != null) {
             getRight().goTo(this.tox + getRight().leftw,
-                this.toy + DataStructure.minsepy);
+                this.toy + separationY);
             getRight().repos();
         }
     }
@@ -382,11 +385,11 @@ public class BSTNode extends Node {
         goTo(x, y);
         if (getLeft() != null) {
             getLeft().repos(this.tox - getLeft().rightw,
-                this.toy + DataStructure.minsepy);
+                this.toy + separationY);
         }
         if (getRight() != null) {
             getRight().repos(this.tox + getRight().leftw,
-                this.toy + DataStructure.minsepy);
+                this.toy + separationY);
         }
         if (isRoot()) {
             D.x1 = x - leftw;
@@ -624,10 +627,10 @@ public class BSTNode extends Node {
             // setRight(null);
         }
         if (getLeft() != null) {
-            getLeft().RTPetrification(tox, y + DataStructure.minsepy);
+            getLeft().RTPetrification(tox, y + separationY);
         }
         if (getRight() != null) {
-            getRight().RTPetrification(tox, y + DataStructure.minsepy);
+            getRight().RTPetrification(tox, y + separationY);
         }
     }
 

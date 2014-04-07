@@ -18,7 +18,7 @@ public class COBTree extends StaticTree {
         super(panel);
 
         vEBtree = new StaticTree(panel);
-        orderedFile = new OrderedFile(panel);
+        orderedFile = new OrderedFile(panel, true);
     }
 
     @Override

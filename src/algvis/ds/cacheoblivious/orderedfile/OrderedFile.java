@@ -16,6 +16,8 @@ public class OrderedFile extends BST {
 
     OrderedFileNode root = null;
 
+    public boolean upsideDown;
+
     @Override
     public void draw(View V) {
         if (root != null) {
@@ -36,7 +38,12 @@ public class OrderedFile extends BST {
     }
 
     public OrderedFile(VisPanel panel) {
+        this(panel, false);
+    }
+
+    public OrderedFile(VisPanel panel, boolean upsideDown) {
         super(panel);
+        this.upsideDown = upsideDown;
 
         initialize(new ArrayList(Arrays.asList(new Integer[]{1, 2, 3, 4})));
     }
