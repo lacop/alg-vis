@@ -25,7 +25,8 @@ public class OrderedFileNode extends BSTNode {
         //leafOccupied = new boolean[leafSize];
         leafElements = new int[leafSize];
 
-        this.separationY *= ((OrderedFile) D).upsideDown ? -1 : 1;
+        // Draw upside down to link with vEB tree
+        this.separationY *= ((OrderedFile) D).vEBtree != null ? -1 : 1;
     }
 
     static final double leafElementRadius = Node.RADIUS;
@@ -207,6 +208,27 @@ public class OrderedFileNode extends BSTNode {
             int half = elements.size() / 2;
             ((OrderedFileNode) getLeft()).insertEvenly(elements.subList(0, half));
             ((OrderedFileNode) getRight()).insertEvenly(elements.subList(half, elements.size()));
+        }
+    }
+
+    @Override
+    protected void repos() {
+        super.repos();
+
+        if (isLeaf()) {
+            if (((OrderedFile)D).vEBtree != null) {
+                // TODO move x to line up with leaves better ?
+                BSTNode leaf = ((OrderedFile)D).vEBtree.getRoot();
+                if (leaf == null) return;
+
+                while (leaf.getLeft() != null) {
+                    leaf = leaf.getLeft();
+                }
+
+                goTo(tox, leaf.toy - separationY);
+            }
+        } else {
+            goTo(tox, getLeft().toy - separationY);
         }
     }
 }

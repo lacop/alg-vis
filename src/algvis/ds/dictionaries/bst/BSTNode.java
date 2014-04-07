@@ -359,7 +359,7 @@ public class BSTNode extends Node {
      * Calculate the coordinates of each node from the widths of boxes around
      * them and direct the nodes to their new positions.
      */
-    private void repos() {
+    protected void repos() {
         if (isRoot()) {
             goToRoot();
             D.x1 = -leftw;

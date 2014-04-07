@@ -29,6 +29,8 @@ public class COBTreePanel extends VisPanel {
             @Override
             public void run() {
                 pauses = true;
+                // Reposition after insert to line up
+                ((COBTree) D).reposition();
             }
         });
     }

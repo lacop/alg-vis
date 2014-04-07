@@ -1,5 +1,6 @@
 package algvis.ds.cacheoblivious.orderedfile;
 
+import algvis.ds.cacheoblivious.statictree.StaticTree;
 import algvis.ds.dictionaries.bst.BST;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ui.VisPanel;
@@ -16,7 +17,8 @@ public class OrderedFile extends BST {
 
     OrderedFileNode root = null;
 
-    public boolean upsideDown;
+    // Linking with vEB tree
+    StaticTree vEBtree = null;
 
     @Override
     public void draw(View V) {
@@ -38,12 +40,12 @@ public class OrderedFile extends BST {
     }
 
     public OrderedFile(VisPanel panel) {
-        this(panel, false);
+        this(panel, null);
     }
 
-    public OrderedFile(VisPanel panel, boolean upsideDown) {
+    public OrderedFile(VisPanel panel, StaticTree vEBtree) {
         super(panel);
-        this.upsideDown = upsideDown;
+        this.vEBtree = vEBtree;
 
         initialize(new ArrayList(Arrays.asList(new Integer[]{1, 2, 3, 4})));
     }

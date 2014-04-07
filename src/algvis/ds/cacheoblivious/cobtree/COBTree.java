@@ -18,7 +18,8 @@ public class COBTree extends StaticTree {
         super(panel);
 
         vEBtree = new StaticTree(panel);
-        orderedFile = new OrderedFile(panel, true);
+        orderedFile = new OrderedFile(panel, vEBtree);
+        //orderedFile = new OrderedFile(panel);
     }
 
     @Override
@@ -44,5 +45,19 @@ public class COBTree extends StaticTree {
 
         vEBtree.move();
         orderedFile.move();
+    }
+
+    @Override
+    public String stats() {
+        orderedFile.stats();
+
+        return "";
+    }
+
+    @Override
+    public void reposition() {
+        super.reposition();
+        vEBtree.reposition();
+        orderedFile.reposition();
     }
 }
