@@ -68,6 +68,18 @@ public class OrderedFileNode extends BSTNode {
             return;
         }
 
+        double cellX = x - (leafSize - 1)*leafElementRadius;
+
+        // Edges linking leafs in OF and vEB
+        if (((OrderedFile) D).vEBtree != null) {
+            // Connect to vEB leaves
+            v.setColor(Color.black);
+            for (int i = 0; i < leafSize; i++) {
+                BSTNode leaf = ((OrderedFile) D).vEBtree.getLeafByOrder(offset*leafSize + i);
+                v.drawLine(cellX + 2*i*leafElementRadius, y, leaf.x, leaf.y);
+            }
+        }
+
         // Leaf outer box
         v.setColor(getBgColor());
         v.fillRect(x, y, leafElementRadius * leafSize, leafElementRadius);
@@ -75,7 +87,6 @@ public class OrderedFileNode extends BSTNode {
         v.drawRect(x, y, leafElementRadius * leafSize, leafElementRadius);
 
         // Inner dividers
-        double cellX = x - (leafSize - 1)*leafElementRadius;
         for (int i = 0; i < leafSize; i++) {
             v.drawSqr(cellX + 2*i*leafElementRadius, y, leafElementRadius);
         }

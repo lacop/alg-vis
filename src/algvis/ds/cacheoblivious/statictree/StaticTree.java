@@ -46,11 +46,29 @@ public class StaticTree extends BST {
     }
 
     public void fullInsert(int q, int offset) {
-        insert((q+1)/2 + offset);
+        insert((q + 1) / 2 + offset);
         if (q > 1) {
             fullInsert(q/2, offset);
             fullInsert(q/2, offset + (q+1)/2);
         }
     }
+    
+    public BSTNode getLeafByOrder(int i) {
+        // Make sure node heights are correct
+        getRoot().calcTree();
 
+        // Traverse from top
+        BSTNode node = getRoot();
+        while (!node.isLeaf()) {
+            int leftCount = (int) Math.pow(2, node.height - 2);
+            if (i < leftCount) {
+                node = node.getLeft();
+            } else {
+                i -= leftCount;
+                node = node.getRight();
+            }
+        }
+
+        return node;
+    }
 }

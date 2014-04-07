@@ -31,8 +31,9 @@ public class COBTree extends StaticTree {
     public void draw(View V) {
         super.draw(V);
 
-        vEBtree.draw(V);
+        // OF draws cross-link edges, make it first so vEB leafs can overlap them
         orderedFile.draw(V);
+        vEBtree.draw(V);
     }
 
     public void init() {
@@ -49,6 +50,8 @@ public class COBTree extends StaticTree {
 
     @Override
     public String stats() {
+        // Needed to run calcTree and update node heights
+        // which are used for thresholds
         orderedFile.stats();
 
         return "";
