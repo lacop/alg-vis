@@ -1,9 +1,14 @@
 package algvis.ds.cacheoblivious.cobtree;
 
 import algvis.ds.cacheoblivious.orderedfile.OrderedFile;
+import algvis.ds.cacheoblivious.orderedfile.OrderedFileNode;
 import algvis.ds.cacheoblivious.statictree.StaticTree;
 import algvis.ui.VisPanel;
 import algvis.ui.view.View;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class COBTree extends StaticTree {
 
@@ -24,7 +29,7 @@ public class COBTree extends StaticTree {
 
     @Override
     public void insert(int x) {
-        vEBtree.insert(x);
+        //vEBtree.insert(x);
     }
 
     @Override
@@ -36,8 +41,17 @@ public class COBTree extends StaticTree {
         vEBtree.draw(V);
     }
 
-    public void init() {
-        vEBtree.fullInsert(15, 0);
+    public void init(List<Integer> keys) {
+        // Insert keys into ordered file
+        orderedFile.initialize(keys);
+
+        // Retrieve all ordered file elements in order
+        // This will form the leaves for vEB tree
+        ArrayList<Integer> leaves = new ArrayList<Integer>();
+        ((OrderedFileNode) orderedFile.getRoot()).insertElements(leaves, true);
+
+        // Form full BST max tree over leaves
+        vEBtree.initWithLeaves(leaves);
     }
 
     @Override

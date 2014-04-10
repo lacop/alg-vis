@@ -11,7 +11,9 @@ import algvis.ui.VisPanel;
 import algvis.ui.view.View;
 
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.List;
 
 public class StaticTree extends BST {
 
@@ -75,4 +77,28 @@ public class StaticTree extends BST {
 
         return node;
     }
+
+    // TODO similar code in OrderedFile, extract somewhere
+    public void initWithLeaves(List<Integer> leaves) {
+        ArrayList<BSTNode> nodes = new ArrayList<BSTNode>();
+        for (int i = 0; i < leaves.size(); i++) {
+            BSTNode leaf = new BSTNode(this, leaves.get(i), ZDepth.NODE);
+            nodes.add(leaf);
+        }
+
+        // Merge into tree
+        while (nodes.size() > 1) {
+            ArrayList<BSTNode> merged = new ArrayList<BSTNode>();
+            for (int i = 0; i < nodes.size(); i += 2) {
+                BSTNode parent = new BSTNode(this, Math.max(nodes.get(i).getKey(), nodes.get(i+1).getKey()), ZDepth.NODE);
+                parent.linkLeft(nodes.get(i));
+                parent.linkRight(nodes.get(i + 1));
+                merged.add(parent);
+            }
+            nodes = merged;
+        }
+
+        root = nodes.get(0);
+    }
+
 }

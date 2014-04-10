@@ -5,6 +5,9 @@ import algvis.core.Settings;
 import algvis.ui.DictButtons;
 import algvis.ui.VisPanel;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class COBTreePanel extends VisPanel {
     public static Class<? extends DataStructure> DS = COBTree.class;
 
@@ -24,7 +27,7 @@ public class COBTreePanel extends VisPanel {
         super.start();
 
         this.pauses = false;
-        ((COBTree) D).init(); // TODO cleanup
+        ((COBTree) D).init(new ArrayList(Arrays.asList(new Integer[]{1, 3, 5, 7}))); // TODO cleanup
         D.start(new Runnable() {
             @Override
             public void run() {
