@@ -3,17 +3,18 @@ package algvis.ds.cacheoblivious.cobtree;
 import algvis.ds.cacheoblivious.orderedfile.OrderedFile;
 import algvis.ds.cacheoblivious.orderedfile.OrderedFileNode;
 import algvis.ds.cacheoblivious.statictree.StaticTree;
+import algvis.ds.dictionaries.bst.BST;
 import algvis.ui.VisPanel;
 import algvis.ui.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class COBTree extends StaticTree {
+public class COBTree extends BST {
 
     public static String adtName = "cacheoblivious";
     // TODO rename
-    public static String dsName = "btree";
+    public static String dsName = "cobtree";
 
     StaticTree vEBtree;
     OrderedFile orderedFile;
@@ -23,7 +24,6 @@ public class COBTree extends StaticTree {
 
         vEBtree = new StaticTree(panel);
         orderedFile = new OrderedFile(panel, vEBtree);
-        //orderedFile = new OrderedFile(panel);
     }
 
     @Override
@@ -51,6 +51,8 @@ public class COBTree extends StaticTree {
 
         // Form full BST max tree over leaves
         vEBtree.initWithLeaves(leaves);
+
+        reposition();
     }
 
     @Override

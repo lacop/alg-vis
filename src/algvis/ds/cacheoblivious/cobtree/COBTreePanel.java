@@ -20,25 +20,14 @@ public class COBTreePanel extends VisPanel {
         D = new COBTree(this);
         scene.add(D);
         buttons = new DictButtons(this);
-
-        // TODO FIXME
-        // Won't work if it's not startup (default) DS, or after switching back
     }
 
     @Override
     public void start() {
         super.start();
 
-        this.pauses = false;
-        //((COBTree) D).init(new ArrayList(Arrays.asList(new Integer[]{1, 3, 5, 7}))); // TODO cleanup
+        // TODO cleanup
+        //((COBTree) D).init(new ArrayList(Arrays.asList(new Integer[]{1, 3, 5, 7})));
         ((COBTree) D).init(new ArrayList(Arrays.asList(new Integer[]{1, 3, 5, 7, 9, 11, 13, 15})));
-        D.start(new Runnable() {
-            @Override
-            public void run() {
-                pauses = true;
-                // Reposition after insert to line up
-                ((COBTree) D).reposition();
-            }
-        });
     }
 }
