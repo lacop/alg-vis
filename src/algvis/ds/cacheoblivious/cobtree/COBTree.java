@@ -7,7 +7,6 @@ import algvis.ui.VisPanel;
 import algvis.ui.view.View;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class COBTree extends StaticTree {
@@ -48,7 +47,7 @@ public class COBTree extends StaticTree {
         // Retrieve all ordered file elements in order
         // This will form the leaves for vEB tree
         ArrayList<Integer> leaves = new ArrayList<Integer>();
-        ((OrderedFileNode) orderedFile.getRoot()).insertElements(leaves, true);
+        ((OrderedFileNode) orderedFile.getRoot()).getElements(leaves, true);
 
         // Form full BST max tree over leaves
         vEBtree.initWithLeaves(leaves);

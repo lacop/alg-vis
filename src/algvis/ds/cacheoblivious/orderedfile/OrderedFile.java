@@ -72,6 +72,11 @@ public class OrderedFile extends BST {
         // Compute base-2 log of number of elements (no float rounding errors)
         for(int e = elements.size(); e > 4; leafSize++, e /= 2);
 
+        // Round up leaf size to power of two to work with vEB tree
+        int powTwo = 2;
+        for(; powTwo < leafSize; powTwo *= 2);
+        leafSize = powTwo;
+
         // TODO optimal starting value?
         final int oneOverDensity = 2; // Density will be at most 1/2 at leafs
         // Leaf count is smallest power of two for which the elements

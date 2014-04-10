@@ -8,7 +8,6 @@ import algvis.ui.Fonts;
 import algvis.ui.view.View;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.util.*;
 import java.util.List;
 
@@ -41,15 +40,27 @@ public class OrderedFileNode extends BSTNode {
         leafElements[i] = val;
     }
 
-    /*@Override
-    public int getKey() {
-        return 42;
-    } */
-
     public boolean densityWithinThresholds() {
         return getDensity() >= ((OrderedFile)D).thresholdSparse(height) &&
-               getDensity() <= ((OrderedFile)D).thresholdDense(height) &&
-               getDensity() < 1; // TODO hack to make sure we can always insert into leaf, avoid?
+               getDensity() <= ((OrderedFile)D).thresholdDense(height);// &&
+               //getDensity() < 1; // TODO hack to make sure we can always insert into leaf, avoid?
+    }
+
+    // Number of extra empty slots in this subtree
+    // One empty is required in each leaf, rest is considered extra
+    public int extraEmptySlots() {
+        if (isLeaf()) {
+            int empty = 0;
+            for (int i = 0; i < leafSize; i++) {
+                // TODO proper occupied status, allow inserting zero
+                if (leafElements[i] == 0) empty++;
+            }
+
+            return empty - 1; // Need one in this leaf
+        }
+
+        return ((OrderedFileNode) getLeft()).extraEmptySlots() +
+               ((OrderedFileNode) getRight()).extraEmptySlots();
     }
 
     @Override
@@ -176,7 +187,7 @@ public class OrderedFileNode extends BSTNode {
 
     }
 
-    public void insertElements(ArrayList<Integer> elements, boolean empty) {
+    public void getElements(ArrayList<Integer> elements, boolean empty) {
         if (isLeaf()) {
             for(int i = 0; i < leafSize; i++) {
                 if (empty || leafElements[i] != 0) {
@@ -185,8 +196,8 @@ public class OrderedFileNode extends BSTNode {
             }
         } else {
             // In order, left before right
-            ((OrderedFileNode) getLeft()).insertElements(elements, empty);
-            ((OrderedFileNode) getRight()).insertElements(elements, empty);
+            ((OrderedFileNode) getLeft()).getElements(elements, empty);
+            ((OrderedFileNode) getRight()).getElements(elements, empty);
         }
     }
 
