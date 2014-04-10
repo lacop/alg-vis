@@ -138,9 +138,9 @@ public class OrderedFileNode extends BSTNode {
         return (double)full/leafSize;
     }
 
-    public void drawThresholds(View v) {
-        double lx = x - leftw;
-        double rx = x + rightw;
+    public void drawThresholds(View v, BSTNode xBoundsNode) {
+        double lx = x - xBoundsNode.leftw;
+        double rx = x + xBoundsNode.rightw;
 
         OrderedFileNode node = this;
         OrderedFile DS = (OrderedFile) D;
