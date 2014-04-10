@@ -15,8 +15,8 @@ public class COBTree extends StaticTree {
     // TODO rename
     public static String dsName = "btree";
 
-    private StaticTree vEBtree;
-    private OrderedFile orderedFile;
+    StaticTree vEBtree;
+    OrderedFile orderedFile;
 
     protected COBTree(VisPanel panel) {
         super(panel);
@@ -28,7 +28,7 @@ public class COBTree extends StaticTree {
 
     @Override
     public void insert(int x) {
-        //vEBtree.insert(x);
+        start(new COBTreeInsert(this, x));
     }
 
     @Override

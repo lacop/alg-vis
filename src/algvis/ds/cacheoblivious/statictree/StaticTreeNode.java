@@ -2,6 +2,7 @@ package algvis.ds.cacheoblivious.statictree;
 
 import algvis.core.DataStructure;
 import algvis.core.NodeColor;
+import algvis.ds.cacheoblivious.orderedfile.OrderedFileNode;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ui.Fonts;
 import algvis.ui.view.View;
@@ -31,6 +32,10 @@ public class StaticTreeNode extends BSTNode {
     public void setOrder(int i) {
         this.order = i;
     }
+
+    // TODO private + get/set
+    public int orderedFileOffset;
+    public int orderedFilePos;
 
     @Override
     public void access() {

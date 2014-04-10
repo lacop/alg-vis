@@ -9,6 +9,10 @@ public class OrderedFileInsert extends Algorithm {
     final int pos;
     final int value;
 
+    // Offset range of changed interval
+    int minOffset = -1;
+    int maxOffset = -1;
+
     public OrderedFileInsert(OrderedFile OF, int pos, int value) {
         super(OF.panel);
 
@@ -60,6 +64,7 @@ public class OrderedFileInsert extends Algorithm {
             OF.initialize(elements);
 
             return;
+            // TODO report to COBTree?
         }
 
         // TODO interval highlighting like in interval tree?
@@ -98,6 +103,10 @@ public class OrderedFileInsert extends Algorithm {
 
             leaf.insertEvenly(elements.subList(start, end));
             start = end;
+
+            // Update affected range
+            if (minOffset == -1 || minOffset > leaf.offset) minOffset = leafOffset;
+            if (maxOffset == -1 || maxOffset < leaf.offset) maxOffset = leafOffset;
         }
 
 

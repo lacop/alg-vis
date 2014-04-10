@@ -18,6 +18,8 @@ public class StaticTreeSetOrder extends Algorithm {
     private int order = 1;
     @Override
     public void runAlgorithm() throws InterruptedException {
+        // Make sure tree node heights are correct
+        T.getRoot().calcTree();
         setOrder((StaticTreeNode) T.getRoot(), T.getRoot().height);
     }
 

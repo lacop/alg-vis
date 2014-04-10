@@ -3,6 +3,7 @@ package algvis.ds.cacheoblivious.orderedfile;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.visual.ZDepth;
+import algvis.ds.cacheoblivious.statictree.StaticTreeNode;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ui.Fonts;
 import algvis.ui.view.View;
@@ -38,6 +39,10 @@ public class OrderedFileNode extends BSTNode {
     public void setElement(int i, int val) {
         //leafOccupied[i] = true;
         leafElements[i] = val;
+    }
+
+    public int getElement(int i) {
+        return leafElements[i];
     }
 
     public boolean densityWithinThresholds() {
@@ -88,6 +93,10 @@ public class OrderedFileNode extends BSTNode {
             for (int i = 0; i < leafSize; i++) {
                 BSTNode leaf = ((OrderedFile) D).vEBtree.getLeafByOrder(offset*leafSize + i);
                 v.drawLine(cellX + 2*i*leafElementRadius, y, leaf.x, leaf.y);
+
+                // TODO move to init/somewhere else
+                ((StaticTreeNode) leaf).orderedFileOffset = offset;
+                ((StaticTreeNode) leaf).orderedFilePos = i;
             }
         }
 

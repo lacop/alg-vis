@@ -82,7 +82,7 @@ public class StaticTree extends BST {
     public void initWithLeaves(List<Integer> leaves) {
         ArrayList<BSTNode> nodes = new ArrayList<BSTNode>();
         for (int i = 0; i < leaves.size(); i++) {
-            BSTNode leaf = new BSTNode(this, leaves.get(i), ZDepth.NODE);
+            BSTNode leaf = new StaticTreeNode(this, leaves.get(i), ZDepth.NODE);
             nodes.add(leaf);
         }
 
@@ -90,7 +90,7 @@ public class StaticTree extends BST {
         while (nodes.size() > 1) {
             ArrayList<BSTNode> merged = new ArrayList<BSTNode>();
             for (int i = 0; i < nodes.size(); i += 2) {
-                BSTNode parent = new BSTNode(this, Math.max(nodes.get(i).getKey(), nodes.get(i+1).getKey()), ZDepth.NODE);
+                BSTNode parent = new StaticTreeNode(this, Math.max(nodes.get(i).getKey(), nodes.get(i+1).getKey()), ZDepth.NODE);
                 parent.linkLeft(nodes.get(i));
                 parent.linkRight(nodes.get(i + 1));
                 merged.add(parent);
@@ -99,6 +99,9 @@ public class StaticTree extends BST {
         }
 
         root = nodes.get(0);
+
+        // Set memory order
+        setOrder();
     }
 
 }

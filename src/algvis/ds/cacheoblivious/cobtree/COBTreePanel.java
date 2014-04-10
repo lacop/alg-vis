@@ -30,7 +30,8 @@ public class COBTreePanel extends VisPanel {
         super.start();
 
         this.pauses = false;
-        ((COBTree) D).init(new ArrayList(Arrays.asList(new Integer[]{1, 3, 5, 7}))); // TODO cleanup
+        //((COBTree) D).init(new ArrayList(Arrays.asList(new Integer[]{1, 3, 5, 7}))); // TODO cleanup
+        ((COBTree) D).init(new ArrayList(Arrays.asList(new Integer[]{1, 3, 5, 7, 9, 11, 13, 15})));
         D.start(new Runnable() {
             @Override
             public void run() {
