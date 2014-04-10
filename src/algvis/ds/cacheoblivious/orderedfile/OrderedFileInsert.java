@@ -38,7 +38,7 @@ public class OrderedFileInsert extends Algorithm {
 
                 // Collect all elements in order
                 ArrayList<Integer> elements = new ArrayList<Integer>();
-                OF.root.insertElements(elements);
+                OF.root.insertElements(elements, false);
 
                 // TODO for prettier animation instead insert just new nodes and connect them
                 OF.initialize(elements);
@@ -55,7 +55,7 @@ public class OrderedFileInsert extends Algorithm {
         // Step 3 - Evenly rebalance interval
         ArrayList<Integer> elements = new ArrayList<Integer>();
         // Collect all elements in order
-        node.insertElements(elements);
+        node.insertElements(elements, false);
 
         // Get all leaves belonging to this interval
         ArrayList<OrderedFileNode> leaves = new ArrayList<OrderedFileNode>();

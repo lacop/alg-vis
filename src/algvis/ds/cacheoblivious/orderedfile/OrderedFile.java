@@ -47,14 +47,14 @@ public class OrderedFile extends BST {
         super(panel);
         this.vEBtree = vEBtree;
 
-        initialize(new ArrayList(Arrays.asList(new Integer[]{1, 2, 3, 4})));
+        //initialize(new ArrayList(Arrays.asList(new Integer[]{1, 2, 3, 4})));
     }
 
     // TODO private + getters
     public int leafSize;
     public ArrayList<OrderedFileNode> leaves;
 
-    void initialize(List<Integer> elements) {
+    public void initialize(List<Integer> elements) {
         // TODO check this math, optimize?
 
         // Find parameters - leaf size, leaf count, ...
