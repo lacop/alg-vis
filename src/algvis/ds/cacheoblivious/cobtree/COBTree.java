@@ -63,15 +63,6 @@ public class COBTree extends StaticTree {
     }
 
     @Override
-    public String stats() {
-        // Needed to run calcTree and update node heights
-        // which are used for thresholds
-        orderedFile.stats();
-
-        return "";
-    }
-
-    @Override
     public void reposition() {
         super.reposition();
         vEBtree.reposition();

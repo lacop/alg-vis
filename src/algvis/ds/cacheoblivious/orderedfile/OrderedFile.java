@@ -98,6 +98,9 @@ public class OrderedFile extends BST {
 
         root = nodes.get(0);
 
+        // Calculate node heights (for thresholds)
+        root.calcTree();
+
         // Insert elements evenly
         root.insertEvenly(elements);
 
