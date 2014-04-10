@@ -21,6 +21,7 @@ public class OrderedFilePanel extends VisPanel {
         D = new OrderedFile(this);
 
         ((OrderedFile) D).initialize(new ArrayList(Arrays.asList(new Integer[]{1, 3, 5, 7})));
+        //((OrderedFile) D).initialize(new ArrayList(Arrays.asList(new Integer[]{1, 3, 5, 7, 9, 11, 12, 15})));
 
         scene.add(D);
         buttons = new OrderedFileButtons(this);

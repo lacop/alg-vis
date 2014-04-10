@@ -20,6 +20,9 @@ public class COBTreePanel extends VisPanel {
         D = new COBTree(this);
         scene.add(D);
         buttons = new DictButtons(this);
+
+        // TODO FIXME
+        // Won't work if it's not startup (default) DS, or after switching back
     }
 
     @Override
