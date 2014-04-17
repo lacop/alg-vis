@@ -240,10 +240,14 @@ public class BSTNode extends Node {
         drawTree2(v);
     }
 
+    protected void drawEdge(View v) {
+        v.setColor(Color.black);
+        v.drawLine(x, y, parent.x, parent.y);
+    }
+
 	protected void drawTree2(View v) {
         if (state != INVISIBLE && parent != null) {
-            v.setColor(Color.black);
-            v.drawLine(x, y, parent.x, parent.y);
+            drawEdge(v);
         }
         if (getLeft() != null) {
             // System.out.println("kreslim lavy " + getLeft().key + " " +

@@ -78,18 +78,32 @@ public class OrderedFileNode extends BSTNode {
     }
 
     @Override
-    protected void drawBg(View v) {
+    protected void drawEdge(View v) {
         if (!isLeaf()) {
-            super.drawBg(v);
+            super.drawEdge(v);
             return;
         }
 
-        double cellX = x - (leafSize - 1)*leafElementRadius;
+        // Draw leaf edges from corners to avoid overlapping offset numbers
+        v.setColor(Color.black);
+        double cornerX, cornerY;
+        if (getParent().getLeft() == this) {
+            cornerX = x + leafSize*leafElementRadius; // Right corner for left child
+        } else {
+            cornerX = x - leafSize*leafElementRadius; // Left corner for right child
+        }
+        if (((OrderedFile) D).vEBtree != null) {
+            cornerY = y + leafElementRadius; // Bottom corner for upside down
+        } else {
+            cornerY = y - leafElementRadius; // Top corner for normal
+        }
+
+        v.drawLine(cornerX, cornerY, getParent().x, getParent().y);
 
         // Edges linking leafs in OF and vEB
+        double cellX = x - (leafSize - 1)*leafElementRadius;
         if (((OrderedFile) D).vEBtree != null) {
             // Connect to vEB leaves
-            v.setColor(Color.black);
             for (int i = 0; i < leafSize; i++) {
                 BSTNode leaf = ((OrderedFile) D).vEBtree.getLeafByOrder(offset*leafSize + i);
                 v.drawLine(cellX + 2*i*leafElementRadius, y, leaf.x, leaf.y);
@@ -99,6 +113,16 @@ public class OrderedFileNode extends BSTNode {
                 ((StaticTreeNode) leaf).orderedFilePos = i;
             }
         }
+    }
+
+    @Override
+    protected void drawBg(View v) {
+        if (!isLeaf()) {
+            super.drawBg(v);
+            return;
+        }
+
+        double cellX = x - (leafSize - 1)*leafElementRadius;
 
         // Leaf outer box
         v.setColor(getBgColor());
