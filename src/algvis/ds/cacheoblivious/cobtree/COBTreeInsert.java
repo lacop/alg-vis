@@ -2,10 +2,13 @@ package algvis.ds.cacheoblivious.cobtree;
 
 import algvis.core.Algorithm;
 import algvis.ds.cacheoblivious.orderedfile.OrderedFileInsert;
+import algvis.ds.cacheoblivious.orderedfile.OrderedFileNode;
 import algvis.ds.cacheoblivious.statictree.StaticTree;
 import algvis.ds.cacheoblivious.statictree.StaticTreeNode;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ui.VisPanel;
+
+import java.util.ArrayList;
 
 public class COBTreeInsert extends Algorithm {
 
@@ -48,7 +51,17 @@ public class COBTreeInsert extends Algorithm {
         int position = stNode.orderedFileOffset*tree.orderedFile.leafSize + stNode.orderedFilePos;
         OrderedFileInsert ofInsert = new OrderedFileInsert(tree.orderedFile, position, key);
         ofInsert.runAlgorithm();
-        // TODO handle doubling of tree
+
+        // OF has doubled, rebuild vEB tree
+        if (ofInsert.minOffset == -1 && ofInsert.maxOffset == -1) {
+            ArrayList<Integer> leaves = new ArrayList<Integer>();
+            ((OrderedFileNode) tree.orderedFile.getRoot()).getElements(leaves, true);
+
+            // Form full BST max tree over leaves
+            tree.vEBtree.initWithLeaves(leaves);
+
+            tree.reposition();
+        }
 
         // Step 3 - update affected keys
         // Go through in post-order traversal

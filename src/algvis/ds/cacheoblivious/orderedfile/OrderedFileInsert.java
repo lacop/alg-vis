@@ -10,8 +10,8 @@ public class OrderedFileInsert extends Algorithm {
     final int value;
 
     // Offset range of changed interval
-    int minOffset = -1;
-    int maxOffset = -1;
+    public int minOffset = -1;
+    public int maxOffset = -1;
 
     public OrderedFileInsert(OrderedFile OF, int pos, int value) {
         super(OF.panel);
