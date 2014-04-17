@@ -51,7 +51,7 @@ public class AlgVis extends JPanel implements ActionListener {
 	 * 24 - Static Cache-oblivious tree ("statictree"), 25 - Ordered File ("ordered file")
 	 * 26 - Cache-oblivious Btree ("cobtree")
 	 */
-	private final static int DEFAULT_DS = 25;
+	private final static int DEFAULT_DS = 26;
 
     private static final long serialVersionUID = -5202486006824196688L;
 
