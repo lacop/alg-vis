@@ -52,4 +52,14 @@ public class StaticTreeNode extends BSTNode {
             return super.getBgColor().darker();
         }
     }
+
+    @Override
+    protected void rebox() {
+        super.rebox();
+
+        // Pack leaves closer together
+        if (isLeaf()) {
+            leftw = rightw = DataStructure.minsepx / 3;
+        }
+    }
 }

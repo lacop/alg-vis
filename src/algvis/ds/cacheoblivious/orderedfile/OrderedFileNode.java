@@ -246,18 +246,22 @@ public class OrderedFileNode extends BSTNode {
     protected void repos() {
         super.repos();
 
+        BSTNode left = null, right = null;
         if (isLeaf()) {
             // Align OF leaves under vEB leaves
             if (((OrderedFile)D).vEBtree != null) {
                 // Center each group
-                BSTNode left = ((OrderedFile) D).vEBtree.getLeafByOrder(offset*leafSize);
-                BSTNode right = ((OrderedFile) D).vEBtree.getLeafByOrder((offset + 1)*leafSize -1);
-                if (left == null || right == null) return;
-
-                goTo((left.tox + right.tox) / 2, left.toy - separationY);
+                left = ((OrderedFile) D).vEBtree.getLeafByOrder(offset*leafSize);
+                right = ((OrderedFile) D).vEBtree.getLeafByOrder((offset + 1)*leafSize -1);
             }
         } else {
-            goTo(tox, getLeft().toy - separationY);
+            // Align between child nodes
+            left = getLeft();
+            right = getRight();
         }
+
+        if (left == null || right == null) return;
+        // Center between left and right
+        goTo((left.tox + right.tox) / 2, left.toy - separationY);
     }
 }
