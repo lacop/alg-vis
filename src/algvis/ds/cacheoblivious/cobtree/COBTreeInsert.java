@@ -7,6 +7,7 @@ import algvis.ds.cacheoblivious.statictree.StaticTree;
 import algvis.ds.cacheoblivious.statictree.StaticTreeNode;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ui.VisPanel;
+import algvis.ui.view.REL;
 
 import java.util.ArrayList;
 
@@ -26,25 +27,40 @@ public class COBTreeInsert extends Algorithm {
     public void runAlgorithm() throws InterruptedException {
         // Step 1 - find successor key in tree
         BSTNode node = tree.vEBtree.getRoot();
+        // TODO remove magic number 200
+        addStep(node.x, node.y, 200, REL.TOP, "cobtree-insert-find-start");
+        pause();
+
         while (!node.isLeaf()) {
+            node.mark();
+
+            BSTNode nextnode = null;
             if (node.getLeft().getKey() >= key) {
-                node = node.getLeft();
+                addStep(node.x, node.y, 200, REL.TOP, "cobtree-insert-left", key, node.getLeft().getKey());
+                nextnode = node.getLeft();
             } else {
-                node = node.getRight();
+                addStep(node.x, node.y, 200, REL.TOP, "cobtree-insert-right", key, node.getLeft().getKey());
+                nextnode = node.getRight();
             }
+
+            pause();
+            node.unmark();
+            node = nextnode;
         }
-        // TODO mark each step, pause, ...
         // TODO access nodes to show cache use
 
+        // Found target leaf
         node.mark();
-        //pause();
-        node.unmark();
-
         if (node.getKey() == key) {
-            // TODO already existing key
+            addStep(node.x, node.y, 200, REL.TOP, "cobtree-insert-existing");
+            pause();
+
             return;
         }
 
+        addStep(node.x, node.y, 200, REL.TOP, "cobtree-insert-found");
+        pause();
+        node.unmark();
 
         // Step 2 - insert at that position into ordered file
         StaticTreeNode stNode = (StaticTreeNode) node;
@@ -59,8 +75,11 @@ public class COBTreeInsert extends Algorithm {
 
             // Form full BST max tree over leaves
             tree.vEBtree.initWithLeaves(leaves);
-
             tree.reposition();
+
+            // TODO better animation? but layout is broken
+            addStep(0, 0, 200, REL.TOP, "cobtree-insert-of-resized");
+            pause();
 
             // No need for traversal, already up to date
             return;
@@ -68,11 +87,16 @@ public class COBTreeInsert extends Algorithm {
 
         // Step 3 - update affected keys
         // Go through in post-order traversal
+        addStep(0, 0, 200, REL.TOP, "cobtree-insert-traverse");
+        pause();
+
         postOrderTraverse(tree.vEBtree.getRoot());
     }
 
     private void postOrderTraverse(BSTNode node) {
         // TODO skip nodes outside of changed interval
+        // TODO return false when not updated, cancel recursive update all the way up?
+
         if (node.isLeaf()) {
             // Get key from ordered file
             StaticTreeNode stNode = (StaticTreeNode) node;
