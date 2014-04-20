@@ -61,6 +61,9 @@ public class COBTreeInsert extends Algorithm {
             tree.vEBtree.initWithLeaves(leaves);
 
             tree.reposition();
+
+            // No need for traversal, already up to date
+            return;
         }
 
         // Step 3 - update affected keys
