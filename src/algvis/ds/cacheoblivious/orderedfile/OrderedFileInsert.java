@@ -1,6 +1,7 @@
 package algvis.ds.cacheoblivious.orderedfile;
 
 import algvis.core.Algorithm;
+import algvis.ui.view.REL;
 
 import java.util.ArrayList;
 
@@ -21,8 +22,6 @@ public class OrderedFileInsert extends Algorithm {
         this.value = value;
     }
 
-    // TODO pause and highlight
-    // TODO explain steps
     @Override
     public void runAlgorithm() throws InterruptedException {
         // Step 1 - insert into leaf group
@@ -30,16 +29,28 @@ public class OrderedFileInsert extends Algorithm {
         int leafOffset = pos / OF.leafSize;
         int leafPos = pos % OF.leafSize;
 
+        // Find the leaf
         OrderedFileNode insertLeaf = OF.leaves.get(leafOffset);
+
+        addStep(insertLeaf.x, insertLeaf.y, 200, REL.BOTTOM, "of-insert-group-find");
+        insertLeaf.mark(leafPos);
+        pause();
+
+        // Rewrite group in this leaf
         insertLeaf.insertAtPos(leafPos, value);
-        //pause();
+
+        addStep(insertLeaf.x, insertLeaf.y, 200, REL.BOTTOM, "of-insert-group-rewrite");
+        insertLeaf.mark();
+        pause();
+        insertLeaf.unmark();
 
         // Step 2 - Walk up the tree until balanced node is found
         // Make sure there will be empty spot in every leaf
         OrderedFileNode node = insertLeaf;
         while (node != null) {
             node.mark();
-            //pause();
+            addStep(node.x, node.y, 200, REL.TOP, "of-insert-find-balanced");
+            pause();
             // Needs to be withing density thresholds
             if (node.densityWithinThresholds()) {
                 // Need to have enough space to leave empty slot in every leaf after rebalance
@@ -53,10 +64,14 @@ public class OrderedFileInsert extends Algorithm {
             node.unmark();
             node = (OrderedFileNode) node.getParent();
         }
+
         // Couldn't find suitable subtree to rebalance
         // => root is unbalanced start over with fresh ordered file
         if (node == null) {
             // Collect all elements in order
+            addStep(0, 0, 200, REL.TOP, "of-insert-root-unbalanced");
+            pause();
+
             ArrayList<Integer> elements = new ArrayList<Integer>();
             OF.root.getElements(elements, false);
 
@@ -69,7 +84,8 @@ public class OrderedFileInsert extends Algorithm {
 
         // TODO interval highlighting like in interval tree?
         node.mark();
-        //pause();
+        addStep(node.x, node.y, 200, REL.TOP, "of-insert-found-balanced");
+        pause();
         node.unmark();
 
         // Step 3 - Evenly rebalance interval

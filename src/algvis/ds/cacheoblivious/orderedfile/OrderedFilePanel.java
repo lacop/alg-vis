@@ -4,12 +4,13 @@ import algvis.core.DataStructure;
 import algvis.core.Settings;
 import algvis.ds.cacheoblivious.statictree.StaticTree;
 import algvis.ds.cacheoblivious.statictree.StaticTreeButtons;
+import algvis.ui.NewVisPanel;
 import algvis.ui.VisPanel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class OrderedFilePanel extends VisPanel {
+public class OrderedFilePanel extends NewVisPanel {
     public static Class<? extends DataStructure> DS = OrderedFile.class;
 
     public OrderedFilePanel(Settings S) {

@@ -45,6 +45,16 @@ public class OrderedFileNode extends BSTNode {
         return leafElements[i];
     }
 
+    int markedLeaf = -1;
+    public void mark(int leafPos) {
+        markedLeaf = leafPos;
+    }
+    @Override
+    public void unmark() {
+        super.unmark();
+        markedLeaf = -1;
+    }
+
     public boolean densityWithinThresholds() {
         return getDensity() >= ((OrderedFile)D).thresholdSparse(height) &&
                getDensity() <= ((OrderedFile)D).thresholdDense(height);// &&
@@ -125,11 +135,22 @@ public class OrderedFileNode extends BSTNode {
         double cellX = x - (leafSize - 1)*leafElementRadius;
 
         // Leaf outer box
-        v.setColor(getBgColor());
+        if (marked) {
+            v.setColor(Color.yellow);
+        } else {
+            v.setColor(getBgColor());
+        }
         v.fillRect(x, y, leafElementRadius * leafSize, leafElementRadius);
+
+        // Highlight marked element
+        if (markedLeaf >= 0) {
+            v.setColor(Color.yellow);
+            v.fillRect(cellX + 2*markedLeaf*leafElementRadius, y, leafElementRadius, leafElementRadius);
+        }
+
+        // Outer box
         v.setColor(getFgColor());
         v.drawRect(x, y, leafElementRadius * leafSize, leafElementRadius);
-
         // Inner dividers
         for (int i = 0; i < leafSize; i++) {
             v.drawSqr(cellX + 2*i*leafElementRadius, y, leafElementRadius);
@@ -139,6 +160,7 @@ public class OrderedFileNode extends BSTNode {
 
     @Override
     protected void drawKey(View v) {
+        v.setColor(getFgColor());
         if (!isLeaf()) {
             v.drawString("" + getDensity(), x, y, Fonts.NORMAL);
         } else {
