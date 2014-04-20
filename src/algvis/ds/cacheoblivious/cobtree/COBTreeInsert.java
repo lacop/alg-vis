@@ -49,7 +49,7 @@ public class COBTreeInsert extends Algorithm {
         // Step 2 - insert at that position into ordered file
         StaticTreeNode stNode = (StaticTreeNode) node;
         int position = stNode.orderedFileOffset*tree.orderedFile.leafSize + stNode.orderedFilePos;
-        OrderedFileInsert ofInsert = new OrderedFileInsert(tree.orderedFile, position, key);
+        OrderedFileInsert ofInsert = new OrderedFileInsert(this, tree.orderedFile, position, key);
         ofInsert.runAlgorithm();
 
         // OF has doubled, rebuild vEB tree

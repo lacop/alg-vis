@@ -22,6 +22,13 @@ public class OrderedFileInsert extends Algorithm {
         this.value = value;
     }
 
+    public OrderedFileInsert(Algorithm a, OrderedFile OF, int pos, int value) {
+        super(OF.panel, a);
+        this.OF = OF;
+        this.pos = pos;
+        this.value = value;
+    }
+
     @Override
     public void runAlgorithm() throws InterruptedException {
         // Step 1 - insert into leaf group
