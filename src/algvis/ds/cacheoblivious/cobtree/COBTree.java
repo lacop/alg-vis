@@ -4,10 +4,12 @@ import algvis.ds.cacheoblivious.orderedfile.OrderedFile;
 import algvis.ds.cacheoblivious.orderedfile.OrderedFileNode;
 import algvis.ds.cacheoblivious.statictree.StaticTree;
 import algvis.ds.dictionaries.bst.BST;
+import algvis.ds.dictionaries.bst.BSTFind;
 import algvis.ui.VisPanel;
 import algvis.ui.view.View;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class COBTree extends BST {
@@ -29,6 +31,12 @@ public class COBTree extends BST {
     @Override
     public void insert(int x) {
         start(new COBTreeInsert(this, x));
+    }
+
+    @Override
+    public void clear() {
+        //init(new ArrayList(Arrays.asList(new Integer[]{1, 3, 5, 7})));
+        init(new ArrayList(Arrays.asList(new Integer[]{1, 3, 5, 7, 9, 11, 13, 15})));
     }
 
     @Override

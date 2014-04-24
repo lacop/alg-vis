@@ -27,8 +27,6 @@ public class COBTreePanel extends NewVisPanel {
     public void start() {
         super.start();
 
-        // TODO cleanup
-        //((COBTree) D).init(new ArrayList(Arrays.asList(new Integer[]{1, 3, 5, 7})));
-        ((COBTree) D).init(new ArrayList(Arrays.asList(new Integer[]{1, 3, 5, 7, 9, 11, 13, 15})));
+        D.clear();
     }
 }
