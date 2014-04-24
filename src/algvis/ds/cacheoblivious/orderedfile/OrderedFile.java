@@ -15,23 +15,21 @@ public class OrderedFile extends BST {
     public static String adtName = "cacheoblivious";
     public static String dsName = "orderedfile";
 
-    OrderedFileNode root = null;
-
     // Linking with vEB tree
     StaticTree vEBtree = null;
 
     @Override
     public void draw(View V) {
         if (root != null) {
-            root.drawTree(V);
+            getRoot().drawTree(V);
 
             // Draw threshold values
             // Get X bounds from vEB tree if available as it's wider
             // TODO do in rebox?
             if (vEBtree != null && vEBtree.getRoot() != null) {
-                root.drawThresholds(V, vEBtree.getRoot());
+                ((OrderedFileNode) getRoot()).drawThresholds(V, vEBtree.getRoot());
             } else {
-                root.drawThresholds(V, root);
+                ((OrderedFileNode) getRoot()).drawThresholds(V, getRoot());
             }
         }
     }
@@ -40,11 +38,6 @@ public class OrderedFile extends BST {
     @Override
     public String getName() {
         return dsName;
-    }
-
-    @Override
-    public BSTNode getRoot() {
-        return root;
     }
 
     public OrderedFile(VisPanel panel) {
@@ -112,26 +105,26 @@ public class OrderedFile extends BST {
         root = nodes.get(0);
 
         // Calculate node heights (for thresholds)
-        root.calcTree();
+        getRoot().calcTree();
 
         // Insert elements evenly
-        root.insertEvenly(elements);
+        ((OrderedFileNode) getRoot()).insertEvenly(elements);
 
         // Update layout
         reposition();
     }
 
     public double thresholdSparse(int height) {
-        int depth = root.height - height;
+        int depth = getRoot().height - height;
 
         // 1/2 at root, 1/4 at leaves
-        return 0.5 - 0.25*((double)depth / (root.height - 1));
+        return 0.5 - 0.25*((double)depth / (getRoot().height - 1));
     }
     public double thresholdDense(int height) {
-        int depth = root.height - height;
+        int depth = getRoot().height - height;
 
         // 3/4 at root, 1 at leaves
-        return 0.75 + 0.25*((double)depth / (root.height - 1));
+        return 0.75 + 0.25*((double)depth / (getRoot().height - 1));
     }
 
     public void insert(int pos, int value) {

@@ -80,7 +80,7 @@ public class OrderedFileInsert extends Algorithm {
             pause();
 
             ArrayList<Integer> elements = new ArrayList<Integer>();
-            OF.root.getElements(elements, false);
+            ((OrderedFileNode) OF.getRoot()).getElements(elements, false);
 
             // TODO for prettier animation instead insert just new nodes and connect them
             OF.initialize(elements);
