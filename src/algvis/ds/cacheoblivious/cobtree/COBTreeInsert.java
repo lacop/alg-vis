@@ -36,10 +36,10 @@ public class COBTreeInsert extends Algorithm {
 
             BSTNode nextnode = null;
             if (node.getLeft().getKey() >= key) {
-                addStep(node.x, node.y, 200, REL.TOP, "cobtree-insert-left", key, node.getLeft().getKey());
+                addStep(node.x, node.y, 200, REL.TOP, "cobtree-find-left", key, node.getLeft().getKey());
                 nextnode = node.getLeft();
             } else {
-                addStep(node.x, node.y, 200, REL.TOP, "cobtree-insert-right", key, node.getLeft().getKey());
+                addStep(node.x, node.y, 200, REL.TOP, "cobtree-find-right", key, node.getLeft().getKey());
                 nextnode = node.getRight();
             }
 

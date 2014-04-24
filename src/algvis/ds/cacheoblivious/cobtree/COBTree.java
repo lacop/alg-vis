@@ -34,6 +34,11 @@ public class COBTree extends BST {
     }
 
     @Override
+    public void find(int x) {
+        start(new COBTreeFind(this, x));
+    }
+
+    @Override
     public void clear() {
         //init(new ArrayList(Arrays.asList(new Integer[]{1, 3, 5, 7})));
         init(new ArrayList(Arrays.asList(new Integer[]{1, 3, 5, 7, 9, 11, 13, 15})));
