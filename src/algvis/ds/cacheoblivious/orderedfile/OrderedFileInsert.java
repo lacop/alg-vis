@@ -111,7 +111,6 @@ public class OrderedFileInsert extends Algorithm {
 
         // Redistribute evenly
         int start = 0;
-
         for(OrderedFileNode leaf : leaves) {
             int end = start + share;
             // Put leftover at beginning
@@ -130,8 +129,22 @@ public class OrderedFileInsert extends Algorithm {
             // Update affected range
             if (minOffset == -1 || minOffset > leaf.offset) minOffset = leafOffset;
             if (maxOffset == -1 || maxOffset < leaf.offset) maxOffset = leafOffset;
+
         }
 
+        // Mark nodes
+        int avgX = 0;
+        for(OrderedFileNode leaf : leaves) {
+            avgX += leaf.x;
+            leaf.mark();
+        }
+        avgX /= leaves.size();
 
+        addStep(avgX, leaves.get(0).y, 200, REL.BOTTOM, "of-insert-interval");
+        pause();
+
+        for(OrderedFileNode leaf : leaves) {
+            leaf.unmark();
+        }
     }
 }
