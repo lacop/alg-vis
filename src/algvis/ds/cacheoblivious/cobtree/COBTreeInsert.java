@@ -90,27 +90,54 @@ public class COBTreeInsert extends Algorithm {
         addStep(0, 0, 200, REL.TOP, "cobtree-insert-traverse");
         pause();
 
-        postOrderTraverse(tree.vEBtree.getRoot());
+        postOrderTraverse(tree.vEBtree.getRoot(), ofInsert.minOffset, ofInsert.maxOffset);
     }
 
-    private void postOrderTraverse(BSTNode node) {
-        // TODO skip nodes outside of changed interval
-        // TODO return false when not updated, cancel recursive update all the way up?
+    private boolean postOrderTraverse(BSTNode node, int minOffset, int maxOffset) throws InterruptedException {
+        int newKey = 0;
 
         if (node.isLeaf()) {
-            // Get key from ordered file
             StaticTreeNode stNode = (StaticTreeNode) node;
-            node.setKey(tree.orderedFile.leaves.get(stNode.orderedFileOffset).getElement(stNode.orderedFilePos));
+            // Ignore leaves outside modified interval
+            if (stNode.orderedFileOffset < minOffset || stNode.orderedFileOffset > maxOffset) {
+                return false;
+            }
 
-            return;
+            // Get new key from ordered file
+            OrderedFileNode ofNode = tree.orderedFile.leaves.get(stNode.orderedFileOffset);
+            newKey = ofNode.getElement(stNode.orderedFilePos);
+        } else {
+            // Update child nodes first
+            boolean leftChanged = postOrderTraverse(node.getLeft(), minOffset, maxOffset);
+            boolean rightChanged = postOrderTraverse(node.getRight(), minOffset, maxOffset);
+
+            // Neither child node has changed, skip
+            if (!leftChanged && !rightChanged) {
+                return false;
+            }
+
+            // Set key to  max of child keys
+            newKey = Math.max(node.getLeft().getKey(), node.getRight().getKey());
         }
 
-        // Update child nodes first
-        postOrderTraverse(node.getLeft());
-        postOrderTraverse(node.getRight());
+        // No change
+        if (newKey == node.getKey()) {
+            return false;
+        }
 
-        // Set key to  max of child keys
-        node.setKey(Math.max(node.getLeft().getKey(), node.getRight().getKey()));
+        if (node.isLeaf()) {
+            addStep(node.x, node.y, 200, REL.TOP, "cobtree-insert-update-leaf");
+        } else {
+            addStep(node.x, node.y, 200, REL.TOP, "cobtree-insert-update-node");
+        }
+
+        node.mark();
+        pause();
+        node.unmark();
+
+        node.setKey(newKey);
+
+        return true;
     }
 
 
