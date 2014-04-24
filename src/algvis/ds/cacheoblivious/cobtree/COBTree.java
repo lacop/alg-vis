@@ -10,6 +10,7 @@ import algvis.ui.view.View;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Hashtable;
 import java.util.List;
 
 public class COBTree extends BST {
@@ -81,5 +82,19 @@ public class COBTree extends BST {
         super.reposition();
         vEBtree.reposition();
         orderedFile.reposition();
+    }
+
+    @Override
+    public void storeState(Hashtable<Object, Object> state) {
+        super.storeState(state);
+        vEBtree.storeState(state);
+        orderedFile.storeState(state);
+    }
+
+    @Override
+    public void restoreState(Hashtable<?, ?> state) {
+        super.restoreState(state);
+        vEBtree.restoreState(state);
+        orderedFile.restoreState(state);
     }
 }
