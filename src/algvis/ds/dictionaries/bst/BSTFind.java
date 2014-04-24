@@ -20,13 +20,14 @@ package algvis.ds.dictionaries.bst;
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
+import algvis.ui.VisPanel;
 import algvis.ui.view.REL;
 
 import java.util.HashMap;
 
 public class BSTFind extends Algorithm {
     private final BST T;
-    private final int K;
+    protected final int K;
     private final HashMap<String, Object> result = new HashMap<String, Object>(); // node
 
     public BSTFind(BST T, int x) {
@@ -34,9 +35,21 @@ public class BSTFind extends Algorithm {
     }
 
     public BSTFind(BST T, int x, Algorithm a) {
-        super(T.panel, a);
+        this(T.panel, T, x, a);
+    }
+
+    public BSTFind(VisPanel panel, BST T, int x, Algorithm a) {
+        super(panel, a);
         this.T = T;
         K = x;
+    }
+
+    protected boolean found(BSTNode w) {
+        return w.getKey() == K;
+    }
+
+    protected boolean goRight(BSTNode w) {
+        return w.getKey() < K;
     }
 
     @Override
@@ -60,13 +73,13 @@ public class BSTFind extends Algorithm {
             pause();
             while (true) {
                 w.access();
-                if (w.getKey() == K) {
+                if (found(w)) {
                     v.goTo(w);
                     addStep(w, REL.BOTTOM, "found");
                     v.setColor(NodeColor.FOUND);
                     result.put("node", w);
                     break;
-                } else if (w.getKey() < K) {
+                } else if (goRight(w)) {
                     if (w.getRight() == null) {
                         v.pointInDir(45);
                     } else {
