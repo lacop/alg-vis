@@ -2,6 +2,7 @@ package algvis.ds.cacheoblivious.orderedfile;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
 import algvis.ds.cacheoblivious.statictree.StaticTreeNode;
 import algvis.ds.dictionaries.bst.BSTNode;
@@ -309,5 +310,37 @@ public class OrderedFileNode extends BSTNode {
         if (left == null || right == null) return;
         // Center between left and right
         goTo((left.tox + right.tox) / 2, left.toy - separationY);
+    }
+
+    @Override
+    public void storeState(Hashtable<Object, Object> state) {
+        super.storeState(state);
+
+        HashtableStoreSupport.store(state, hash + "leafSize", leafSize);
+        HashtableStoreSupport.store(state, hash + "leafElements", leafElements.clone());
+        HashtableStoreSupport.store(state, hash + "offset", offset);
+        HashtableStoreSupport.store(state, hash + "markedLeaf", markedLeaf);
+    }
+
+    @Override
+    public void restoreState(Hashtable<?, ?> state) {
+        super.restoreState(state);
+
+        final Object leafSize = state.get(hash + "leafSize");
+        if (leafSize != null) {
+            this.leafSize = (Integer) leafSize;
+        }
+        final Object leafElements = state.get(hash + "leafElements");
+        if (leafElements != null) {
+            this.leafElements = (int[]) leafElements;
+        }
+        final Object offset = state.get(hash + "offset");
+        if (offset != null) {
+            this.offset = (Integer) offset;
+        }
+        final Object markedLeaf = state.get(hash + "markedLeaf");
+        if (markedLeaf != null) {
+            this.markedLeaf = (Integer) markedLeaf;
+        }
     }
 }
