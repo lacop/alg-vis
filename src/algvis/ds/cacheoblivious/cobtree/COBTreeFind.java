@@ -10,7 +10,11 @@ import algvis.ui.view.REL;
 public class COBTreeFind extends BSTFind {
 
     protected COBTreeFind(COBTree tree, int key) {
-        super(tree.panel, tree.vEBtree, key, null);
+        this(null, tree, key);
+    }
+
+    protected COBTreeFind(Algorithm a, COBTree tree, int key) {
+        super(tree.panel, tree.vEBtree, key, a);
     }
 
     @Override

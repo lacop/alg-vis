@@ -27,31 +27,16 @@ public class COBTreeInsert extends Algorithm {
     public void runAlgorithm() throws InterruptedException {
         // Step 1 - find successor key in tree
         BSTNode node = tree.vEBtree.getRoot();
-        // TODO remove magic number 200
-        addStep(node.x, node.y, 200, REL.TOP, "cobtree-insert-find-start");
+        addStep(node, REL.TOP, "cobtree-insert-find-start");
         pause();
 
-        while (!node.isLeaf()) {
-            node.mark();
+        COBTreeFind cobFind = new COBTreeFind(this, tree, key);
+        cobFind.setLastStep(false);
+        cobFind.runAlgorithm();
 
-            BSTNode nextnode = null;
-            if (node.getLeft().getKey() >= key) {
-                addStep(node.x, node.y, 200, REL.TOP, "cobtree-find-left", key, node.getLeft().getKey());
-                nextnode = node.getLeft();
-            } else {
-                addStep(node.x, node.y, 200, REL.TOP, "cobtree-find-right", key, node.getLeft().getKey());
-                nextnode = node.getRight();
-            }
-
-            pause();
-            node.unmark();
-            node = nextnode;
-        }
-        // TODO access nodes to show cache use
-
-        // Found target leaf
+        node = cobFind.getLastNode();
         node.mark();
-        if (node.getKey() == key) {
+        if (cobFind.getFound()) {
             addStep(node.x, node.y, 200, REL.TOP, "cobtree-insert-existing");
             pause();
 

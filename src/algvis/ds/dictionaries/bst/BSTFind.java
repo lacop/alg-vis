@@ -30,6 +30,13 @@ public class BSTFind extends Algorithm {
     protected final int K;
     private final HashMap<String, Object> result = new HashMap<String, Object>(); // node
 
+    // Last compared node and found flag
+    private boolean found = false;
+    private BSTNode lastNode = null;
+
+    // Display last "found"/"not found" message + animation?
+    private boolean lastStep = true;
+
     public BSTFind(BST T, int x) {
         this(T, x, null);
     }
@@ -52,6 +59,18 @@ public class BSTFind extends Algorithm {
         return w.getKey() < K;
     }
 
+    public boolean getFound() {
+        return found;
+    }
+
+    public BSTNode getLastNode() {
+        return lastNode;
+    }
+
+    public void setLastStep(boolean lastStep) {
+        this.lastStep = lastStep;
+    }
+
     @Override
     public void runAlgorithm() throws InterruptedException {
         setHeader("find", K);
@@ -72,13 +91,26 @@ public class BSTFind extends Algorithm {
             addStep(w, REL.BOTTOM, "bstfindstart");
             pause();
             while (true) {
+                lastNode = w;
                 w.access();
-                if (found(w)) {
-                    v.goTo(w);
-                    addStep(w, REL.BOTTOM, "found");
-                    v.setColor(NodeColor.FOUND);
-                    result.put("node", w);
-                    break;
+                if (w.isLeaf() || found(w)) {
+                    if (found(w)) {
+                        found = true;
+                        if (lastStep) {
+                            v.goTo(w);
+                            addStep(w, REL.BOTTOM, "found");
+                            v.setColor(NodeColor.FOUND);
+                        }
+                        result.put("node", w);
+                        break;
+                    } else {
+                        if (lastStep) {
+                            addStep(v, REL.BOTTOM, "notfound");
+                            v.goDown();
+                        }
+                        v.setColor(NodeColor.NOTFOUND);
+                        break;
+                    }
                 } else if (goRight(w)) {
                     if (w.getRight() == null) {
                         v.pointInDir(45);
@@ -96,9 +128,11 @@ public class BSTFind extends Algorithm {
                         w = w.getRight();
                         v.goAbove(w);
                     } else { // not found
-                        addStep(w, REL.BOTTOMLEFT, "notfound");
+                        if (lastStep) {
+                            addStep(w, REL.BOTTOMLEFT, "notfound");
+                            v.goRight();
+                        }
                         v.setColor(NodeColor.NOTFOUND);
-                        v.goRight();
                         break;
                     }
                 } else {
@@ -118,9 +152,11 @@ public class BSTFind extends Algorithm {
                         w = w.getLeft();
                         v.goAbove(w);
                     } else { // notfound
-                        addStep(w, REL.BOTTOMLEFT, "notfound");
+                        if (lastStep) {
+                            addStep(w, REL.BOTTOMLEFT, "notfound");
+                            v.goLeft();
+                        }
                         v.setColor(NodeColor.NOTFOUND);
-                        v.goLeft();
                         break;
                     }
                 }
@@ -130,7 +166,9 @@ public class BSTFind extends Algorithm {
         if (result.get("node") == null) {
             removeFromScene(v);
         }
-        pause();
+        if (lastStep) {
+            pause();
+        }
         if (T.getRoot() != null) {
             T.getRoot().subtreeColor(NodeColor.NORMAL);
         }
