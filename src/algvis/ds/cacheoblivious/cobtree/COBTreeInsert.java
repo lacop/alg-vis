@@ -37,13 +37,14 @@ public class COBTreeInsert extends Algorithm {
         node = cobFind.getLastNode();
         node.mark();
         if (cobFind.getFound()) {
-            addStep(node.x, node.y, 200, REL.TOP, "cobtree-insert-existing");
+            addStep(node, REL.TOP, "cobtree-insert-existing");
             pause();
+            node.unmark();
 
             return;
         }
 
-        addStep(node.x, node.y, 200, REL.TOP, "cobtree-insert-found");
+        addStep(node, REL.TOP, "cobtree-insert-found");
         pause();
         node.unmark();
 
@@ -63,7 +64,7 @@ public class COBTreeInsert extends Algorithm {
             tree.reposition();
 
             // TODO better animation? but layout is broken
-            addStep(0, 0, 200, REL.TOP, "cobtree-insert-of-resized");
+            addStep(tree.vEBtree.getRoot(), REL.TOP, "cobtree-insert-of-resized");
             pause();
 
             // No need for traversal, already up to date
@@ -72,7 +73,7 @@ public class COBTreeInsert extends Algorithm {
 
         // Step 3 - update affected keys
         // Go through in post-order traversal
-        addStep(0, 0, 200, REL.TOP, "cobtree-insert-traverse");
+        addStep(tree.vEBtree.getRoot(), REL.TOP, "cobtree-insert-traverse");
         pause();
 
         postOrderTraverse(tree.vEBtree.getRoot(), ofInsert.minOffset, ofInsert.maxOffset);
@@ -111,9 +112,9 @@ public class COBTreeInsert extends Algorithm {
         }
 
         if (node.isLeaf()) {
-            addStep(node.x, node.y, 200, REL.TOP, "cobtree-insert-update-leaf");
+            addStep(node, REL.TOP, "cobtree-insert-update-leaf");
         } else {
-            addStep(node.x, node.y, 200, REL.TOP, "cobtree-insert-update-node");
+            addStep(node, REL.TOP, "cobtree-insert-update-node");
         }
 
         node.mark();

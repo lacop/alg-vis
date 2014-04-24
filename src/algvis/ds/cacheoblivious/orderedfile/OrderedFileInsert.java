@@ -39,14 +39,14 @@ public class OrderedFileInsert extends Algorithm {
         // Find the leaf
         OrderedFileNode insertLeaf = OF.leaves.get(leafOffset);
 
-        addStep(insertLeaf.x, insertLeaf.y, 200, REL.BOTTOM, "of-insert-group-find");
+        addStep(insertLeaf, REL.BOTTOM, "of-insert-group-find");
         insertLeaf.mark(leafPos);
         pause();
 
         // Rewrite group in this leaf
         insertLeaf.insertAtPos(leafPos, value);
 
-        addStep(insertLeaf.x, insertLeaf.y, 200, REL.BOTTOM, "of-insert-group-rewrite");
+        addStep(insertLeaf, REL.BOTTOM, "of-insert-group-rewrite");
         insertLeaf.mark();
         pause();
         insertLeaf.unmark();
@@ -56,7 +56,7 @@ public class OrderedFileInsert extends Algorithm {
         OrderedFileNode node = insertLeaf;
         while (node != null) {
             node.mark();
-            addStep(node.x, node.y, 200, REL.TOP, "of-insert-find-balanced");
+            addStep(node, REL.TOP, "of-insert-find-balanced");
             pause();
             // Needs to be withing density thresholds
             if (node.densityWithinThresholds()) {
@@ -76,7 +76,7 @@ public class OrderedFileInsert extends Algorithm {
         // => root is unbalanced start over with fresh ordered file
         if (node == null) {
             // Collect all elements in order
-            addStep(0, 0, 200, REL.TOP, "of-insert-root-unbalanced");
+            addStep(OF.getRoot(), REL.TOP, "of-insert-root-unbalanced");
             pause();
 
             ArrayList<Integer> elements = new ArrayList<Integer>();
@@ -91,7 +91,7 @@ public class OrderedFileInsert extends Algorithm {
 
         // TODO interval highlighting like in interval tree?
         node.mark();
-        addStep(node.x, node.y, 200, REL.TOP, "of-insert-found-balanced");
+        addStep(node, REL.TOP, "of-insert-found-balanced");
         pause();
         node.unmark();
 
