@@ -2,6 +2,7 @@ package algvis.ds.cacheoblivious.statictree;
 
 import algvis.core.DataStructure;
 import algvis.core.NodeColor;
+import algvis.ds.cacheoblivious.Cache;
 import algvis.ds.cacheoblivious.orderedfile.OrderedFileNode;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ui.Fonts;
@@ -39,17 +40,26 @@ public class StaticTreeNode extends BSTNode {
 
     @Override
     public void access() {
-        ((StaticTree) D).cache.access(order);
+        Cache c = ((StaticTree) D).cache;
 
-        setColor(NodeColor.RED);
+        if (c != null) {
+            c.access(order);
+            setColor(NodeColor.RED);
+        }
     }
 
     @Override
     public Color getBgColor() {
-        if (((StaticTree) D).cache.isLoaded(order)) {
-            return super.getBgColor().brighter();
+        Cache c = ((StaticTree) D).cache;
+
+        if (c != null) {
+            if (((StaticTree) D).cache.isLoaded(order)) {
+                return super.getBgColor().brighter();
+            } else {
+                return super.getBgColor().darker();
+            }
         } else {
-            return super.getBgColor().darker();
+            return super.getBgColor();
         }
     }
 

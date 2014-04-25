@@ -2,6 +2,7 @@ package algvis.ds.cacheoblivious.statictree;
 
 import algvis.core.DataStructure;
 import algvis.core.Settings;
+import algvis.ds.cacheoblivious.SingleBlockCache;
 import algvis.ui.VisPanel;
 
 public class StaticTreePanel extends VisPanel {
@@ -14,7 +15,7 @@ public class StaticTreePanel extends VisPanel {
 
     @Override
     protected void initDS() {
-        D = new StaticTree(this);
+        D = new StaticTree(this, new SingleBlockCache(4, false));
         scene.add(D);
         buttons = new StaticTreeButtons(this);
     }

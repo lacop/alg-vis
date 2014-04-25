@@ -20,11 +20,11 @@ public class StaticTree extends BST {
     public static String adtName = "cacheoblivious";
     public static String dsName = "statictree";
 
-    // TODO abstract to CacheObliviousDS, selectable from panel
-    public Cache cache = new SingleBlockCache(4, false);
+    public Cache cache = null;
 
-    public StaticTree(VisPanel panel) {
+    public StaticTree(VisPanel panel, Cache cache) {
         super(panel);
+        this.cache = cache;
     }
 
     @Override
