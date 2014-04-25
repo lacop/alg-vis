@@ -16,7 +16,7 @@ public class StaticTreePanel extends NewVisPanel {
 
     @Override
     protected void initDS() {
-        D = new StaticTree(this, new SingleBlockCache(4, false));
+        D = new StaticTree(this);
         scene.add(D);
         buttons = new StaticTreeButtons(this);
     }

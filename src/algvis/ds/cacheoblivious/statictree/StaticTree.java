@@ -22,9 +22,8 @@ public class StaticTree extends BST {
 
     public Cache cache = null;
 
-    public StaticTree(VisPanel panel, Cache cache) {
+    public StaticTree(VisPanel panel) {
         super(panel);
-        this.cache = cache;
     }
 
     @Override
@@ -34,12 +33,6 @@ public class StaticTree extends BST {
 
     public void setOrder() {
         start(new StaticTreeSetOrder(this));
-    }
-
-    // TODO update while running
-    @Override
-    public String stats() {
-        return cache.stats() + super.stats();
     }
 
     public void fullInsert(int q, int offset) {

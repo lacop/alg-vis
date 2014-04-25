@@ -1,9 +1,19 @@
 package algvis.ds.cacheoblivious;
 
-public interface Cache {
-    public String stats();
+public abstract class Cache {
 
-    public boolean isLoaded(int position);
+    private CachePanel panel;
+    protected Cache(CachePanel panel) {
+        this.panel = panel;
+    }
 
-    public void access(int position);
+    public abstract String stats();
+
+    public abstract boolean isLoaded(int position);
+
+    public abstract void access(int position);
+
+    public void refresh() {
+        panel.refresh();
+    }
 }

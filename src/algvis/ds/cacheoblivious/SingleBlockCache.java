@@ -1,6 +1,6 @@
 package algvis.ds.cacheoblivious;
 
-public class SingleBlockCache implements Cache {
+public class SingleBlockCache extends Cache {
     private int blockSize;
     private int blockStart;
 
@@ -9,7 +9,8 @@ public class SingleBlockCache implements Cache {
     private int readCount = 0;
     private int accessCount = 0;
 
-    public SingleBlockCache(int blockSize, boolean aligned) {
+    public SingleBlockCache(CachePanel panel, int blockSize, boolean aligned) {
+        super(panel);
         this.blockSize = blockSize;
         blockStart = -blockSize; // start + size = 0 => everything is unloaded
 
@@ -35,18 +36,18 @@ public class SingleBlockCache implements Cache {
     public void access(int position) {
         accessCount++;
 
-        if (isLoaded(position))
-            return;
+        if (!isLoaded(position)) {
+            readCount++;
 
-        readCount++;
-
-        if (aligned) {
-            // Memory-aligned cache
-            blockStart = (position / blockSize) * blockSize;
-        } else {
-            blockStart = position;
+            if (aligned) {
+                // Memory-aligned cache
+                blockStart = (position / blockSize) * blockSize;
+            } else {
+                blockStart = position;
+            }
         }
 
+        refresh();
     }
 
 }

@@ -25,7 +25,7 @@ public class COBTree extends BST {
     protected COBTree(VisPanel panel) {
         super(panel);
 
-        vEBtree = new StaticTree(panel, null);
+        vEBtree = new StaticTree(panel);
         orderedFile = new OrderedFile(panel, vEBtree);
     }
 

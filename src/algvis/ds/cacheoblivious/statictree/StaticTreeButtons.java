@@ -1,11 +1,13 @@
 package algvis.ds.cacheoblivious.statictree;
 
 import algvis.core.Dictionary;
+import algvis.ds.cacheoblivious.CachePanel;
 import algvis.internationalization.IButton;
 import algvis.ui.Buttons;
 import algvis.ui.VisPanel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
@@ -44,8 +46,22 @@ public class StaticTreeButtons extends Buttons {
     }
 
     @Override
+    public void setOtherEnabled(boolean enabled) {
+        super.setOtherEnabled(enabled);
+
+        findB.setEnabled(enabled);
+        increaseB.setEnabled(enabled);
+        decreaseB.setEnabled(enabled);
+    }
+
+    @Override
     protected void initRandom() {
         // Intentionally empty to avoid initializing random button
+    }
+
+    @Override
+    protected JPanel initSide() {
+        return new CachePanel(panel);
     }
 
     @Override
@@ -60,11 +76,11 @@ public class StaticTreeButtons extends Buttons {
             }
         } else if (evt.getSource() == increaseB) {
             int height = ((StaticTree) D).getRoot().height;
-            ((StaticTree) D).initialize(height+1);
+            ((StaticTree) D).initialize(height + 1);
         } else if (evt.getSource() == decreaseB) {
             int height = ((StaticTree) D).getRoot().height;
             if (height > 1) {
-                ((StaticTree) D).initialize(height-1);
+                ((StaticTree) D).initialize(height - 1);
             }
         }
     }
