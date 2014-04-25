@@ -2,9 +2,7 @@ package algvis.ds.cacheoblivious.statictree;
 
 import algvis.core.DataStructure;
 import algvis.core.Settings;
-import algvis.ds.cacheoblivious.SingleBlockCache;
 import algvis.ui.NewVisPanel;
-import algvis.ui.VisPanel;
 
 public class StaticTreePanel extends NewVisPanel {
 

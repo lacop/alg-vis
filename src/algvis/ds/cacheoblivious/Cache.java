@@ -1,19 +1,101 @@
 package algvis.ds.cacheoblivious;
 
-public abstract class Cache {
+import java.util.LinkedList;
+
+public class Cache {
+
+    private int blockSize;
+    private int blockCount;
+    private boolean aligned;
+
+    private LinkedList<Integer> blocks;
 
     private CachePanel panel;
-    protected Cache(CachePanel panel) {
+
+    private int readCount = 0;
+    private int accessCount = 0;
+
+    protected Cache(CachePanel panel, int blockSize, int blockCount, boolean aligned) {
         this.panel = panel;
+
+        this.blockSize = blockSize;
+        this.blockCount = blockCount;
+        this.aligned = aligned;
+
+        clear();
     }
 
-    public abstract String stats();
+    public void setBlockSize(int blockSize) {
+        this.blockSize = blockSize;
+    }
 
-    public abstract boolean isLoaded(int position);
+    public void setBlockCount(int blockCount) {
+        this.blockCount = blockCount;
 
-    public abstract void access(int position);
+        while (blocks.size() > blockCount) {
+            blocks.removeFirst();
+        }
+    }
 
-    public void refresh() {
+    public void clear() {
+        blocks = new LinkedList<Integer>();
+
+        readCount = 0;
+        accessCount = 0;
+
         panel.refresh();
+    }
+
+    public String stats() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<html>");
+        sb.append("Access count: " + accessCount + "<br>");
+        sb.append("Read count: " + readCount + "<br>");
+        sb.append("</html>");
+
+        return sb.toString();
+    }
+
+    public boolean isLoaded(int position) {
+        for (Integer blockStart : blocks) {
+            System.out.print(blockStart + " ");
+        }
+        System.out.println();
+
+        for (Integer blockStart : blocks) {
+            if ((blockStart <= position) && (position < blockStart + blockSize)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void access(int position) {
+        accessCount++;
+
+        if (!isLoaded(position)) {
+            readCount++;
+
+            load(position);
+        }
+
+        panel.refresh();
+    }
+
+    public void load(int position) {
+        int blockStart;
+        if (aligned) {
+            // Memory-aligned cache
+            blockStart = (position / blockSize) * blockSize;
+        } else {
+            blockStart = position;
+        }
+
+        if (blocks.size() == blockCount) {
+            blocks.removeFirst();
+        }
+
+        blocks.addLast(blockStart);
     }
 }

@@ -1,18 +1,12 @@
 package algvis.ds.cacheoblivious.statictree;
 
-import algvis.core.DataStructure;
 import algvis.core.visual.ZDepth;
 import algvis.ds.cacheoblivious.Cache;
-import algvis.ds.cacheoblivious.SingleBlockCache;
 import algvis.ds.dictionaries.bst.BST;
-import algvis.ds.dictionaries.bst.BSTInsert;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ui.VisPanel;
-import algvis.ui.view.View;
 
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 import java.util.List;
 
 public class StaticTree extends BST {
