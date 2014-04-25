@@ -79,16 +79,28 @@ abstract public class Buttons extends JPanel implements ActionListener,
         final JPanel second = initSecondRow();
         final JPanel third = initThirdRow();
         final JPanel statsPanel = initStats();
+        final JPanel sidePanel = initSide();
+
+        JPanel mainPanel = this;
+        if (sidePanel != null) {
+            // Wrap everything in another panel
+            mainPanel = new JPanel();
+
+            // Put them side by side
+            setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+            add(mainPanel);
+            add(sidePanel);
+        }
 
         // put everything together
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        add(first);
-        add(second);
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+        mainPanel.add(first);
+        mainPanel.add(second);
         if (third != null) {
-            add(third);
+            mainPanel.add(third);
         }
-        add(statsPanel);
-        setBorder(BorderFactory.createTitledBorder(""));
+        mainPanel.add(statsPanel);
+        mainPanel.setBorder(BorderFactory.createTitledBorder(""));
     }
 
     // input field, actions (insert, find, delete,...), previous, next
@@ -131,6 +143,10 @@ abstract public class Buttons extends JPanel implements ActionListener,
     }
 
     protected JPanel initThirdRow() {
+        return null;
+    }
+
+    protected JPanel initSide() {
         return null;
     }
 
