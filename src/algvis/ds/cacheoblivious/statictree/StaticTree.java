@@ -39,12 +39,7 @@ public class StaticTree extends BST {
     // TODO update while running
     @Override
     public String stats() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("BS: " + cache.getBlockSize() + "  ");
-        sb.append("AC: " + cache.getAccessCount() + "  ");
-        sb.append("RC: " + cache.getReadCount() + " ; ");
-
-        return sb.toString() + super.stats();
+        return cache.stats() + super.stats();
     }
 
     public void fullInsert(int q, int offset) {
@@ -54,7 +49,29 @@ public class StaticTree extends BST {
             fullInsert(q/2, offset + (q+1)/2);
         }
     }
-    
+
+    @Override
+    public void clear() {
+        initialize(1);
+    }
+
+    void initialize(int height) {
+        super.clear();
+
+        panel.pauses = false;
+
+        int nodes = (1 << height) - 1;
+        fullInsert(nodes, 0);
+
+        // Pause after insert is complete
+        start(new Runnable() {
+            @Override
+            public void run() {
+                panel.pauses = true;
+            }
+        });
+    }
+
     public BSTNode getLeafByOrder(int i) {
         if (getRoot() == null) {
             return null;

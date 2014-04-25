@@ -17,18 +17,13 @@ public class SingleBlockCache implements Cache {
     }
 
     @Override
-    public int getBlockSize() {
-        return blockSize;
-    }
+    public String stats() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("BS: " + blockSize + "  ");
+        sb.append("AC: " + accessCount + "  ");
+        sb.append("RC: " + readCount + " ; ");
 
-    @Override
-    public int getReadCount() {
-        return readCount;
-    }
-
-    @Override
-    public int getAccessCount() {
-        return accessCount;
+        return sb.toString();
     }
 
     @Override

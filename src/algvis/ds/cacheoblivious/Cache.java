@@ -1,9 +1,7 @@
 package algvis.ds.cacheoblivious;
 
 public interface Cache {
-    public int getBlockSize();
-    public int getReadCount();
-    public int getAccessCount();
+    public String stats();
 
     public boolean isLoaded(int position);
 
