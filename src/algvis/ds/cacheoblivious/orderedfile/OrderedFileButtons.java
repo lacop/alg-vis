@@ -30,7 +30,11 @@ public class OrderedFileButtons extends Buttons {
         super.actionPerformed(evt);
         if (evt.getSource() == insertB) {
             Vector<Integer> args = I.getVI();
-            // TODO verify two arguments are given
+            // TODO range check
+            if (args.size() != 2) {
+                // TODO i18n?
+                panel.statusBar.setText("enter position and value as two integers separated by space");
+            }
 
             ((OrderedFile) D).insert(args.get(0), args.get(1));
         }
