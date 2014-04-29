@@ -1,6 +1,7 @@
 package algvis.ds.cacheoblivious.statictree;
 
 import algvis.core.DataStructure;
+import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.ds.cacheoblivious.Cache;
 import algvis.ds.cacheoblivious.orderedfile.OrderedFileNode;
@@ -9,6 +10,7 @@ import algvis.ui.Fonts;
 import algvis.ui.view.View;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 public class StaticTreeNode extends BSTNode {
     protected StaticTreeNode(DataStructure D, int key, int x, int y) {
@@ -71,5 +73,33 @@ public class StaticTreeNode extends BSTNode {
         if (isLeaf()) {
             leftw = rightw = DataStructure.minsepx / 3;
         }
+    }
+
+    private int getArrayX() {
+        int halfOrder = (((StaticTree) D).maxOrder - 1)/2;
+        int pos = order - halfOrder;
+        return pos*2*Node.RADIUS;
+    }
+
+    @Override
+    protected void drawBg(View v) {
+        super.drawBg(v);
+
+        int arrayY = ((StaticTree) D).arrayY;
+        int arrayX = getArrayX();
+        v.setColor(getBgColor());
+        v.fillRect(arrayX, arrayY, Node.RADIUS, Node.RADIUS);
+        v.setColor(getFgColor());
+        v.drawRect(arrayX, arrayY, Node.RADIUS, Node.RADIUS);
+    }
+
+    @Override
+    protected void drawKey(View v) {
+        super.drawKey(v);
+
+        int arrayY = ((StaticTree) D).arrayY;
+        int arrayX = getArrayX();
+        v.setColor(getFgColor());
+        v.drawString(toString(), arrayX, arrayY, Fonts.NORMAL);
     }
 }

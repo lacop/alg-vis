@@ -1,11 +1,13 @@
 package algvis.ds.cacheoblivious.statictree;
 
+import algvis.core.Node;
 import algvis.core.visual.ZDepth;
 import algvis.ds.cacheoblivious.Cache;
 import algvis.ds.dictionaries.bst.BST;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ui.VisPanel;
 
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,9 @@ public class StaticTree extends BST {
     public static String dsName = "statictree";
 
     public Cache cache = null;
+
+    public int arrayY = -5 * Node.RADIUS;
+    public int maxOrder = 1;
 
     public StaticTree(VisPanel panel) {
         super(panel);
@@ -107,5 +112,4 @@ public class StaticTree extends BST {
         // Set memory order
         setOrder();
     }
-
 }

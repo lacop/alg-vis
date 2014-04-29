@@ -21,6 +21,7 @@ public class StaticTreeSetOrder extends Algorithm {
         // Make sure tree node heights are correct
         T.getRoot().calcTree();
         setOrder((StaticTreeNode) T.getRoot(), T.getRoot().height);
+        T.maxOrder = order - 1;
     }
 
     // TODO pause + explain?
