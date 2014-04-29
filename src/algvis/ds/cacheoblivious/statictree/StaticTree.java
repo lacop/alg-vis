@@ -117,4 +117,11 @@ public class StaticTree extends BST {
     public String stats() {
         return "";
     }
+
+    @Override
+    public void reposition() {
+        super.reposition();
+
+        panel.screen.V.setBounds(x1, arrayY, x2, y2);
+    }
 }
