@@ -212,6 +212,12 @@ public class OrderedFileNode extends BSTNode {
     public void drawThresholds(View v, BSTNode xBoundsNode) {
         double rx = x + xBoundsNode.rightw;
 
+        final String label = "Allowed density";
+        v.drawStringRight(label, rx, y-DataStructure.minsepy, Fonts.TYPEWRITER);
+
+        // Center under label
+        double cx = rx + Fonts.TYPEWRITER.fm.stringWidth(label)/2;
+
         OrderedFileNode node = this;
         OrderedFile DS = (OrderedFile) D;
         while (node != null) {
@@ -219,7 +225,7 @@ public class OrderedFileNode extends BSTNode {
             text += "-";
             text += formatDensity(DS.thresholdDense(node.height));
 
-            v.drawStringRight(text, rx, node.y, Fonts.TYPEWRITER);
+            v.drawString(text, cx, node.y, Fonts.TYPEWRITER);
             node = (OrderedFileNode) node.getLeft();
         }
     }
