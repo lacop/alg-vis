@@ -163,7 +163,7 @@ public class OrderedFileNode extends BSTNode {
     protected void drawKey(View v) {
         v.setColor(getFgColor());
         if (!isLeaf()) {
-            v.drawString("" + getDensity(), x, y, Fonts.NORMAL);
+            v.drawString(formatDensity(getDensity()), x, y, Fonts.NORMAL);
         } else {
             double cellX = x - (leafSize - 1)*leafElementRadius;
             for (int i = 0; i < leafSize; i++) {
@@ -205,15 +205,21 @@ public class OrderedFileNode extends BSTNode {
         return (double)full/leafSize;
     }
 
+    private String formatDensity(double density) {
+        return Math.round(density*100) + "%";
+    }
+
     public void drawThresholds(View v, BSTNode xBoundsNode) {
-        double lx = x - xBoundsNode.leftw;
         double rx = x + xBoundsNode.rightw;
 
         OrderedFileNode node = this;
         OrderedFile DS = (OrderedFile) D;
         while (node != null) {
-            v.drawStringLeft("Sparse = " + DS.thresholdSparse(node.height), lx, node.y, Fonts.TYPEWRITER);
-            v.drawStringRight("Dense  = " + DS.thresholdDense(node.height), rx, node.y, Fonts.TYPEWRITER);
+            String text = formatDensity(DS.thresholdSparse(node.height));
+            text += "-";
+            text += formatDensity(DS.thresholdDense(node.height));
+
+            v.drawStringRight(text, rx, node.y, Fonts.TYPEWRITER);
             node = (OrderedFileNode) node.getLeft();
         }
     }
