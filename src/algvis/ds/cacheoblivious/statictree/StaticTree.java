@@ -30,8 +30,9 @@ public class StaticTree extends BST {
         start(new StaticTreeInsert(this, new StaticTreeNode(this, x, ZDepth.ACTIONNODE)));
     }
 
+    public StaticTreeSetOrder.OrderType orderType = StaticTreeSetOrder.OrderType.vEBOrder;
     public void setOrder() {
-        start(new StaticTreeSetOrder(this));
+        start(new StaticTreeSetOrder(this, orderType));
     }
 
     public void fullInsert(int q, int offset) {

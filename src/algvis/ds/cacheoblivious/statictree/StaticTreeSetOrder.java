@@ -8,11 +8,19 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class StaticTreeSetOrder extends Algorithm {
-    protected final StaticTree T;
 
-    public StaticTreeSetOrder(StaticTree T) {
+    public enum OrderType {
+        classicOrder,
+        vEBOrder
+    }
+
+    protected final StaticTree T;
+    protected final OrderType type;
+
+    public StaticTreeSetOrder(StaticTree T, OrderType type) {
         super(T.panel);
         this.T = T;
+        this.type = type;
     }
 
     private int order = 1;
@@ -20,12 +28,33 @@ public class StaticTreeSetOrder extends Algorithm {
     public void runAlgorithm() throws InterruptedException {
         // Make sure tree node heights are correct
         T.getRoot().calcTree();
-        setOrder((StaticTreeNode) T.getRoot(), T.getRoot().height);
+
+        if (type == OrderType.vEBOrder) {
+            setvEBOrder((StaticTreeNode) T.getRoot(), T.getRoot().height);
+        } else if (type == OrderType.classicOrder) {
+            setClassicOrder((StaticTreeNode) T.getRoot(), order);
+        } else {
+            // Future orders?
+        }
+
+        // Set maximum order (for array drawing)
         T.maxOrder = order - 1;
     }
 
+    private void setClassicOrder(StaticTreeNode node, int i) {
+        node.setOrder(i);
+        // Keep track of maximum
+        if (i+1 > order) {
+            order = i+1;
+        }
+        if (!node.isLeaf()) {
+            setClassicOrder((StaticTreeNode) node.getLeft(), 2*i);
+            setClassicOrder((StaticTreeNode) node.getRight(), 2*i+1);
+        }
+    }
+
     // TODO pause + explain?
-    private void setOrder(StaticTreeNode root, int height) {
+    private void setvEBOrder(StaticTreeNode root, int height) {
         // TODO assumes full balanced binary tree
 
         if (height <= 2) {
@@ -44,7 +73,7 @@ public class StaticTreeSetOrder extends Algorithm {
             int top = height - bottom;
 
             // First recurse on top half
-            setOrder(root, top);
+            setvEBOrder(root, top);
 
             // Then on bottom halves, starting at depth top+1
             // BFS to find them
@@ -54,7 +83,7 @@ public class StaticTreeSetOrder extends Algorithm {
             while (!queue.isEmpty()) {
                 StaticTreeNode node = queue.remove();
                 if (root.height - top == node.height) {
-                    setOrder(node, bottom);
+                    setvEBOrder(node, bottom);
                 } else {
                     if (node.getLeft() != null) {
                         queue.add((StaticTreeNode) node.getLeft());

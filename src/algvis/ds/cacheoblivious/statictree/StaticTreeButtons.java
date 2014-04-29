@@ -3,20 +3,26 @@ package algvis.ds.cacheoblivious.statictree;
 import algvis.core.Dictionary;
 import algvis.ds.cacheoblivious.CachePanel;
 import algvis.internationalization.IButton;
+import algvis.internationalization.IRadioButton;
 import algvis.ui.Buttons;
 import algvis.ui.VisPanel;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
 
-public class StaticTreeButtons extends Buttons {
+public class StaticTreeButtons extends Buttons implements ChangeListener {
 
     private IButton findB;
     private IButton increaseB;
     private IButton decreaseB;
+
+    private IRadioButton classic;
+    private IRadioButton vEB;
 
     protected StaticTreeButtons(VisPanel panel) {
         super(panel);
@@ -43,6 +49,28 @@ public class StaticTreeButtons extends Buttons {
 
         P.add(increaseB);
         P.add(decreaseB);
+    }
+
+    @Override
+    protected JPanel initThirdRow() {
+        JPanel third = new JPanel();
+        third.setLayout(new FlowLayout());
+
+        classic = new IRadioButton("radio-order-classic");
+        vEB = new IRadioButton("radio-order-vEB");
+        vEB.setSelected(true);
+
+        ButtonGroup orderTypes = new ButtonGroup();
+        orderTypes.add(classic);
+        orderTypes.add(vEB);
+
+        classic.addChangeListener(this);
+        vEB.addChangeListener(this);
+
+        third.add(classic);
+        third.add(vEB);
+
+        return third;
     }
 
     @Override
@@ -83,5 +111,16 @@ public class StaticTreeButtons extends Buttons {
                 ((StaticTree) D).initialize(height - 1);
             }
         }
+    }
+
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        if (vEB.isSelected()) {
+            ((StaticTree) D).orderType = StaticTreeSetOrder.OrderType.vEBOrder;
+        } else if (classic.isSelected()) {
+            ((StaticTree) D).orderType = StaticTreeSetOrder.OrderType.classicOrder;
+        }
+
+        ((StaticTree) D).setOrder();
     }
 }
