@@ -127,8 +127,8 @@ public class OrderedFileInsert extends Algorithm {
             start = end;
 
             // Update affected range
-            if (minOffset == -1 || minOffset > leaf.offset) minOffset = leafOffset;
-            if (maxOffset == -1 || maxOffset < leaf.offset) maxOffset = leafOffset;
+            if (minOffset == -1 || minOffset > leaf.offset) minOffset = leaf.offset;
+            if (maxOffset == -1 || maxOffset < leaf.offset) maxOffset = leaf.offset;
 
         }
 
