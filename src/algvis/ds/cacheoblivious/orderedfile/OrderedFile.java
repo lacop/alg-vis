@@ -130,4 +130,10 @@ public class OrderedFile extends BST {
     public void insert(int pos, int value) {
         start(new OrderedFileInsert(this, pos, value));
     }
+
+    @Override
+    public String stats() {
+        return "";
+        // TODO some useful stats? then also use in COBTree
+    }
 }

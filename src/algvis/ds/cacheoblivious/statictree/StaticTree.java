@@ -112,4 +112,9 @@ public class StaticTree extends BST {
         // Set memory order
         setOrder();
     }
+
+    @Override
+    public String stats() {
+        return "";
+    }
 }

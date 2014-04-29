@@ -97,4 +97,9 @@ public class COBTree extends BST {
         vEBtree.restoreState(state);
         orderedFile.restoreState(state);
     }
+
+    @Override
+    public String stats() {
+        return "";
+    }
 }
