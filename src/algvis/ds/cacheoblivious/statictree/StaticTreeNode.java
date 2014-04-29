@@ -77,7 +77,7 @@ public class StaticTreeNode extends BSTNode {
 
     private int getArrayX() {
         int halfOrder = (((StaticTree) D).maxOrder - 1)/2;
-        int pos = order - halfOrder;
+        int pos = order - halfOrder - 1;
         return pos*2*Node.RADIUS;
     }
 
