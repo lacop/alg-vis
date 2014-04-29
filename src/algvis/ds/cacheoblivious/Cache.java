@@ -58,11 +58,6 @@ public class Cache {
 
     public boolean isLoaded(int position) {
         for (Integer blockStart : blocks) {
-            System.out.print(blockStart + " ");
-        }
-        System.out.println();
-
-        for (Integer blockStart : blocks) {
             if ((blockStart <= position) && (position < blockStart + blockSize)) {
                 return true;
             }
