@@ -102,4 +102,15 @@ public class StaticTreeNode extends BSTNode {
         v.setColor(getFgColor());
         v.drawString(toString(), arrayX, arrayY, Fonts.NORMAL);
     }
+
+    @Override
+    public Rectangle2D getBoundingBox() {
+        Rectangle2D bb = super.getBoundingBox();
+
+        int arrayY = ((StaticTree) D).arrayY;
+        int arrayX = getArrayX();
+        Rectangle2D array = new Rectangle2D.Double(arrayX-Node.RADIUS, arrayY-Node.RADIUS, 2*Node.RADIUS, 2*Node.RADIUS);
+
+        return array.createUnion(bb);
+    }
 }

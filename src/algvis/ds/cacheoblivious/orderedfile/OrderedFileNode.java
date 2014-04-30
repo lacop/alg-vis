@@ -10,6 +10,7 @@ import algvis.ui.Fonts;
 import algvis.ui.view.View;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.*;
 import java.util.List;
 
@@ -156,7 +157,6 @@ public class OrderedFileNode extends BSTNode {
         for (int i = 0; i < leafSize; i++) {
             v.drawSqr(cellX + 2*i*leafElementRadius, y, leafElementRadius);
         }
-
     }
 
     @Override
@@ -210,10 +210,12 @@ public class OrderedFileNode extends BSTNode {
     }
 
     public void drawThresholds(View v, BSTNode xBoundsNode) {
+        v.setColor(getFgColor());
+
         double rx = x + xBoundsNode.rightw;
 
         final String label = "Allowed density";
-        v.drawStringRight(label, rx, y-DataStructure.minsepy, Fonts.TYPEWRITER);
+        v.drawStringRight(label, rx, y-separationY, Fonts.TYPEWRITER);
 
         // Center under label
         double cx = rx + Fonts.TYPEWRITER.fm.stringWidth(label)/2;
@@ -354,5 +356,15 @@ public class OrderedFileNode extends BSTNode {
         if (markedLeaf != null) {
             this.markedLeaf = (Integer) markedLeaf;
         }
+    }
+
+    @Override
+    public Rectangle2D getBoundingBox() {
+        if (!isLeaf()) {
+            return super.getBoundingBox();
+        }
+
+        double cellX = x - (leafSize - 1)*leafElementRadius;
+        return new Rectangle2D.Double(cellX-leafElementRadius, y-leafElementRadius, 2*leafElementRadius*leafSize, 2*leafElementRadius);
     }
 }

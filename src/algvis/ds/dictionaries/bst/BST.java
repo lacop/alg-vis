@@ -27,6 +27,9 @@ import algvis.ui.view.Layout;
 import algvis.ui.view.LayoutListener;
 import algvis.ui.view.View;
 
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+
 public class BST extends Dictionary implements LayoutListener, ClickListener {
     public static String dsName = "bst";
     public boolean order = false;
@@ -116,6 +119,12 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
     public void draw(View V) {
         if (getRoot() != null) {
             getRoot().drawTree(V);
+
+            /*Rectangle2D bb = getRoot().getBoundingBox();
+            if (bb != null) {
+                V.setColor(Color.RED);
+                V.drawRectangle(bb);
+            }*/
         }
     }
 

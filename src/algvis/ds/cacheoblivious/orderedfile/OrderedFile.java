@@ -20,9 +20,8 @@ public class OrderedFile extends BST {
 
     @Override
     public void draw(View V) {
-        if (root != null) {
-            getRoot().drawTree(V);
-
+        super.draw(V);
+        if (getRoot() != null) {
             // Draw threshold values
             // Get X bounds from vEB tree if available as it's wider
             // TODO do in rebox?

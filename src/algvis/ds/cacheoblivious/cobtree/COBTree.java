@@ -8,6 +8,7 @@ import algvis.ds.dictionaries.bst.BSTFind;
 import algvis.ui.VisPanel;
 import algvis.ui.view.View;
 
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
@@ -101,5 +102,17 @@ public class COBTree extends BST {
     @Override
     public String stats() {
         return "";
+    }
+
+    @Override
+    public Rectangle2D getBoundingBox() {
+        Rectangle2D vEBbb = vEBtree.getBoundingBox();
+        Rectangle2D ofbb = orderedFile.getBoundingBox();
+
+        if (vEBbb != null) {
+            return vEBbb.createUnion(ofbb);
+        }
+
+        return ofbb;
     }
 }
