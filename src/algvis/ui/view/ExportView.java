@@ -5,6 +5,8 @@ import algvis.ui.VisPanel;
 import java.awt.geom.Rectangle2D;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import de.erichseifert.vectorgraphics2d.SVGGraphics2D;
 
@@ -22,7 +24,9 @@ public class ExportView extends View {
 
     public void save() {
         try {
-            FileOutputStream file = new FileOutputStream("clipping.svg");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss") ;
+            String filename = dateFormat.format(new Date());
+            FileOutputStream file = new FileOutputStream(filename + ".svg");
             file.write(g.getBytes());
             file.close();
         } catch (IOException e) {
