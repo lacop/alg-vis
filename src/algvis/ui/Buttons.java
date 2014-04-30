@@ -24,6 +24,7 @@ import algvis.core.history.HashtableStoreSupport;
 import algvis.internationalization.ChLabel;
 import algvis.internationalization.IButton;
 import algvis.internationalization.ICheckBox;
+import algvis.ui.view.ExportView;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -269,7 +270,13 @@ abstract public class Buttons extends JPanel implements ActionListener,
         } else if (evt.getSource() == save) {
             // TODO
         } else if (evt.getSource() == resetView) {
-            panel.screen.V.resetView();
+            if ((evt.getModifiers() & ActionEvent.CTRL_MASK) != 0) {
+                ExportView exportView = new ExportView(panel);
+                panel.scene.draw(exportView);
+                exportView.save();
+            } else {
+                panel.screen.V.resetView();
+            }
         }
         I.requestFocusInWindow();
     }
