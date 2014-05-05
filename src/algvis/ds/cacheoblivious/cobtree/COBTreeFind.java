@@ -26,4 +26,14 @@ public class COBTreeFind extends BSTFind {
     protected boolean goRight(BSTNode w) {
         return w.getLeft() != null && w.getLeft().getKey() < K;
     }
+
+    @Override
+    protected void stepLeft(BSTNode v, BSTNode w) {
+        addStep(v, REL.RIGHT, "cobtree-find-left", K, w.getLeft().getKey());
+    }
+
+    @Override
+    protected void stepRight(BSTNode v, BSTNode w) {
+        addStep(v, REL.LEFT, "cobtree-find-right", K, w.getLeft().getKey());
+    }
 }
