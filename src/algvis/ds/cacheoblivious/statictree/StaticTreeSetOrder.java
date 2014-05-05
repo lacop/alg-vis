@@ -55,8 +55,6 @@ public class StaticTreeSetOrder extends Algorithm {
 
     // TODO pause + explain?
     private void setvEBOrder(StaticTreeNode root, int height) {
-        // TODO assumes full balanced binary tree
-
         if (height <= 2) {
             // Set order for small subtree
 

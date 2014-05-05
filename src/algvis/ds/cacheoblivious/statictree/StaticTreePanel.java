@@ -23,7 +23,6 @@ public class StaticTreePanel extends NewVisPanel {
     public void start() {
         super.start();
 
-        // TODO visualize tree creation?
         this.pauses = false;
         ((StaticTree) D).fullInsert(31, 0);
 

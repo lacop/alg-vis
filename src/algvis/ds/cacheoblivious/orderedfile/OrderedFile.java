@@ -54,8 +54,6 @@ public class OrderedFile extends BST {
     public ArrayList<OrderedFileNode> leaves;
 
     public void initialize(List<Integer> elements) {
-        // TODO check this math, optimize?
-
         // Find parameters - leaf size, leaf count, ...
 
         // At least two elements in leaf
@@ -68,7 +66,6 @@ public class OrderedFile extends BST {
         for(; powTwo < leafSize; powTwo *= 2);
         leafSize = powTwo;
 
-        // TODO optimal starting value?
         final int oneOverDensity = 2; // Density will be at most 1/2 at leafs
         // Leaf count is smallest power of two for which the elements
         // can be stored with the desired density

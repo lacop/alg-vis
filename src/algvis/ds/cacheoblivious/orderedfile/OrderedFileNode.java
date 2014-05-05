@@ -59,8 +59,7 @@ public class OrderedFileNode extends BSTNode {
 
     public boolean densityWithinThresholds() {
         return getDensity() >= ((OrderedFile)D).thresholdSparse(height) &&
-               getDensity() <= ((OrderedFile)D).thresholdDense(height);// &&
-               //getDensity() < 1; // TODO hack to make sure we can always insert into leaf, avoid?
+               getDensity() <= ((OrderedFile)D).thresholdDense(height);
     }
 
     // Number of extra empty slots in this subtree
@@ -171,7 +170,6 @@ public class OrderedFileNode extends BSTNode {
                 v.drawString("" + leafElements[i], cellX + 2 * i * leafElementRadius, y, Fonts.NORMAL);
 
                 // Draw index underneath
-                // TODO should really draw indices in between or have one more at start/end, to allow inserting anywhere
                 v.drawString("" + (i + offset*leafSize), cellX + 2 * i * leafElementRadius, y + leafElementRadius*2, Fonts.TYPEWRITER);
             }
         }
@@ -282,9 +280,6 @@ public class OrderedFileNode extends BSTNode {
 
     public void insertEvenly(List<Integer> elements) {
         if (isLeaf()) {
-            // TODO for now just insert at beginning
-            // TODO assert it will fit
-
             // Clear
             for(int i = 0; i < leafSize; i++) {
                 leafElements[i] = 0;
