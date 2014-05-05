@@ -17,8 +17,12 @@ import java.util.List;
 public class COBTree extends BST {
 
     public static String adtName = "cacheoblivious";
-    // TODO rename
     public static String dsName = "cobtree";
+
+    @Override
+    public String getName() {
+        return dsName;
+    }
 
     StaticTree vEBtree;
     OrderedFile orderedFile;

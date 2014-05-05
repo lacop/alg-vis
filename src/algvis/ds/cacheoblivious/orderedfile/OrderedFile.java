@@ -33,7 +33,6 @@ public class OrderedFile extends BST {
         }
     }
 
-    // TODO virtualize in BST or higher
     @Override
     public String getName() {
         return dsName;

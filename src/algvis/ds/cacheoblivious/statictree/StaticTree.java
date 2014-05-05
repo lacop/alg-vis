@@ -16,6 +16,11 @@ public class StaticTree extends BST {
     public static String adtName = "cacheoblivious";
     public static String dsName = "statictree";
 
+    @Override
+    public String getName() {
+        return dsName;
+    }
+
     public Cache cache = null;
 
     public boolean drawArray = true;
