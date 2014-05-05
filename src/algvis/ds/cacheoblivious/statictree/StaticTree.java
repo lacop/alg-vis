@@ -18,6 +18,7 @@ public class StaticTree extends BST {
 
     public Cache cache = null;
 
+    public boolean drawArray = true;
     public int arrayY = -5 * Node.RADIUS;
     public int maxOrder = 1;
 

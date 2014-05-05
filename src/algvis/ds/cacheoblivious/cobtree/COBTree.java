@@ -27,6 +27,7 @@ public class COBTree extends BST {
         super(panel);
 
         vEBtree = new StaticTree(panel);
+        vEBtree.drawArray = false;
         orderedFile = new OrderedFile(panel, vEBtree);
     }
 
