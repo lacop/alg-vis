@@ -6,6 +6,7 @@ import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
 import algvis.ds.cacheoblivious.statictree.StaticTreeNode;
 import algvis.ds.dictionaries.bst.BSTNode;
+import algvis.internationalization.Languages;
 import algvis.ui.Fonts;
 import algvis.ui.view.View;
 
@@ -212,7 +213,7 @@ public class OrderedFileNode extends BSTNode {
 
         double rx = x + xBoundsNode.rightw;
 
-        final String label = "Allowed density";
+        final String label = Languages.getString("of-allowed-density");
         v.drawStringRight(label, rx, y-separationY, Fonts.TYPEWRITER);
 
         // Center under label

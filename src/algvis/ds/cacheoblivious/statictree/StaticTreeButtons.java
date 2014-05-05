@@ -87,9 +87,17 @@ public class StaticTreeButtons extends Buttons implements ChangeListener {
         // Intentionally empty to avoid initializing random button
     }
 
+    CachePanel cachePanel;
     @Override
     protected JPanel initSide() {
-        return new CachePanel(panel);
+        cachePanel = new CachePanel(panel);
+        return cachePanel;
+    }
+
+    @Override
+    public void refresh() {
+        super.refresh();
+        cachePanel.refresh();
     }
 
     @Override
