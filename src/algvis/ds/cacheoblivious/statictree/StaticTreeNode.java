@@ -45,8 +45,15 @@ public class StaticTreeNode extends BSTNode {
         Cache c = ((StaticTree) D).cache;
 
         if (c != null) {
+            if (c.isLoaded(order)) {
+                setColor(NodeColor.GREEN); // cache hit
+            } else {
+                setColor(NodeColor.RED); // cache miss
+            }
+
+            int arrayY = ((StaticTree) D).arrayY;
+            int arrayX = getArrayX();
             c.access(order);
-            setColor(NodeColor.RED);
         }
     }
 
