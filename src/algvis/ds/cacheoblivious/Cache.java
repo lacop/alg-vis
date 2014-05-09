@@ -1,5 +1,7 @@
 package algvis.ds.cacheoblivious;
 
+import algvis.internationalization.Languages;
+
 import java.util.LinkedList;
 
 public class Cache {
@@ -49,10 +51,9 @@ public class Cache {
     public String stats() {
         StringBuilder sb = new StringBuilder();
         sb.append("<html>");
-        sb.append("Access count: " + accessCount + "<br>");
-        sb.append("Read count: " + readCount + "<br>");
+        sb.append(Languages.getString("cache-access-count") + ": " + accessCount + "<br>");
+        sb.append(Languages.getString("cache-read-count") + ": " + readCount + "<br>");
         sb.append("</html>");
-
         return sb.toString();
     }
 

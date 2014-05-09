@@ -284,9 +284,7 @@ public class Scene extends VisualElement {
     }
 
     public synchronized void clear() {
-        for (final VisualElement e : elementsToRemove) {
-            elementsToRemove.remove(e);
-        }
+        elementsToRemove.clear();
         for (final Set<VisualElement> set : elements) {
             set.clear();
         }

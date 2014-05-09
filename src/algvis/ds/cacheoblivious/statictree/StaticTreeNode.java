@@ -45,8 +45,15 @@ public class StaticTreeNode extends BSTNode {
         Cache c = ((StaticTree) D).cache;
 
         if (c != null) {
+            if (c.isLoaded(order)) {
+                setColor(NodeColor.GREEN); // cache hit
+            } else {
+                setColor(NodeColor.RED); // cache miss
+            }
+
+            int arrayY = ((StaticTree) D).arrayY;
+            int arrayX = getArrayX();
             c.access(order);
-            setColor(NodeColor.RED);
         }
     }
 
@@ -85,32 +92,38 @@ public class StaticTreeNode extends BSTNode {
     protected void drawBg(View v) {
         super.drawBg(v);
 
-        int arrayY = ((StaticTree) D).arrayY;
-        int arrayX = getArrayX();
-        v.setColor(getBgColor());
-        v.fillRect(arrayX, arrayY, Node.RADIUS, Node.RADIUS);
-        v.setColor(getFgColor());
-        v.drawRect(arrayX, arrayY, Node.RADIUS, Node.RADIUS);
+        if (((StaticTree) D).drawArray) {
+            int arrayY = ((StaticTree) D).arrayY;
+            int arrayX = getArrayX();
+            v.setColor(getBgColor());
+            v.fillRect(arrayX, arrayY, Node.RADIUS, Node.RADIUS);
+            v.setColor(getFgColor());
+            v.drawRect(arrayX, arrayY, Node.RADIUS, Node.RADIUS);
+        }
     }
 
     @Override
     protected void drawKey(View v) {
         super.drawKey(v);
 
-        int arrayY = ((StaticTree) D).arrayY;
-        int arrayX = getArrayX();
-        v.setColor(getFgColor());
-        v.drawString(toString(), arrayX, arrayY, Fonts.NORMAL);
+        if (((StaticTree) D).drawArray) {
+            int arrayY = ((StaticTree) D).arrayY;
+            int arrayX = getArrayX();
+            v.setColor(getFgColor());
+            v.drawString(toString(), arrayX, arrayY, Fonts.NORMAL);
+        }
     }
 
     @Override
     public Rectangle2D getBoundingBox() {
         Rectangle2D bb = super.getBoundingBox();
+        if (!((StaticTree) D).drawArray) {
+            return bb;
+        }
 
         int arrayY = ((StaticTree) D).arrayY;
         int arrayX = getArrayX();
         Rectangle2D array = new Rectangle2D.Double(arrayX-Node.RADIUS, arrayY-Node.RADIUS, 2*Node.RADIUS, 2*Node.RADIUS);
-
         return array.createUnion(bb);
     }
 }

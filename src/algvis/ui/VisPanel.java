@@ -140,6 +140,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener,
     @Override
     public void languageChanged() {
         border.setTitle("    " + Languages.getString(D.getName()) + "    ");
+        refresh();
     }
 
     public void setOnAir(boolean onAir) {

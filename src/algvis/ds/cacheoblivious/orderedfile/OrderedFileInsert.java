@@ -86,7 +86,6 @@ public class OrderedFileInsert extends Algorithm {
             OF.initialize(elements);
 
             return;
-            // TODO report to COBTree?
         }
 
         // TODO interval highlighting like in interval tree?
@@ -104,19 +103,17 @@ public class OrderedFileInsert extends Algorithm {
         ArrayList<OrderedFileNode> leaves = new ArrayList<OrderedFileNode>();
         node.getLeaves(leaves);
 
-        // TODO recursive redistribution? cleaner code probably
 
         int share = elements.size() / leaves.size();
         int leftover = elements.size() % leaves.size();
 
         // Redistribute evenly
+        // TODO recursive redistribution? cleaner code probably
         int start = 0;
         for(OrderedFileNode leaf : leaves) {
             int end = start + share;
             // Put leftover at beginning
-            // TODO recursive, put leftover into different subtrees?
             // Only fill leafsSize - 1 to always leave one empty slot for insert
-            // TODO make full? but then need make insert more complicated
             if (leftover > 0 && end - start < OF.leafSize - 1) {
                 int extra = Math.min(leftover, OF.leafSize - 1 - (end - start));
                 leftover -= extra;

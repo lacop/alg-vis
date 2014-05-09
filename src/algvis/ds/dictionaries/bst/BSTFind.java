@@ -59,6 +59,14 @@ public class BSTFind extends Algorithm {
         return w.getKey() < K;
     }
 
+    protected void stepLeft(BSTNode v, BSTNode w) {
+        addStep(v, REL.RIGHT, "bstfindleft", K, w.getKey());
+    }
+
+    protected void stepRight(BSTNode v, BSTNode w) {
+        addStep(v, REL.LEFT, "bstfindright", K, w.getKey());
+    }
+
     public boolean getFound() {
         return found;
     }
@@ -117,7 +125,7 @@ public class BSTFind extends Algorithm {
                     } else {
                         v.pointAbove(w.getRight());
                     }
-                    addStep(v, REL.LEFT, "bstfindright", K, w.getKey());
+                    stepRight(v, w);
                     pause();
                     v.noArrow();
                     w.setColor(NodeColor.DARKER);
@@ -141,7 +149,7 @@ public class BSTFind extends Algorithm {
                     } else {
                         v.pointAbove(w.getLeft());
                     }
-                    addStep(v, REL.RIGHT, "bstfindleft", K, w.getKey());
+                    stepLeft(v, w);
                     pause();
                     v.noArrow();
                     w.setColor(NodeColor.DARKER);
