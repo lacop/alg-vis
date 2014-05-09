@@ -40,4 +40,14 @@ public class ExportView extends View {
 
         }
     }
+
+    // TODO: text bubbles don't render properly in PDF, for now just hide them
+    @Override
+    public void drawTextBubble(String s, int x, int y, int w, int alpha, REL pos) {
+        //super.drawTextBubble(s, x, y, w, alpha, pos);
+    }
+    @Override
+    public void drawTextBubble(String s, int x, int y, int w, int alpha, REL pos, int gapx, int gapy) {
+        //super.drawTextBubble(s, x, y, w, alpha, pos, gapx, gapy);
+    }
 }
