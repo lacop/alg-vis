@@ -1,5 +1,6 @@
 package algvis.ds.cacheoblivious.orderedfile;
 
+import algvis.core.MyRandom;
 import algvis.ds.cacheoblivious.statictree.StaticTree;
 import algvis.ds.dictionaries.bst.BST;
 import algvis.ds.dictionaries.bst.BSTNode;
@@ -124,6 +125,24 @@ public class OrderedFile extends BST {
 
     public void insert(int pos, int value) {
         start(new OrderedFileInsert(this, pos, value));
+    }
+
+    // Maximum value to insert
+    final int maxRandValue = 42;
+
+    @Override
+    public void random(final int n) {
+        final boolean p = panel.pauses;
+        panel.pauses = false;
+        for (int i = 0; i < n; ++i) {
+            insert(MyRandom.Int(0, leafSize * leaves.size()), MyRandom.Int(1, maxRandValue));
+        }
+        start(new Runnable() {
+            @Override
+            public void run() {
+                panel.pauses = p;
+            }
+        });
     }
 
     @Override
