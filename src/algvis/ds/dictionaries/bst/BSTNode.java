@@ -21,10 +21,7 @@ import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;
 
-import algvis.core.DataStructure;
-import algvis.core.Node;
-import algvis.core.NodeColor;
-import algvis.core.NodePair;
+import algvis.core.*;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.Fonts;
 import algvis.ui.view.Layout;
@@ -104,10 +101,6 @@ public class BSTNode extends Node {
 
     public int getLevel() {
         return level;
-    }
-
-    public void access() {
-        // For cache purposes
     }
 
     public boolean isRoot() {

@@ -20,6 +20,7 @@ package algvis.ds.dictionaries.bst;
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
+import algvis.ds.cacheoblivious.CacheAccess;
 import algvis.ui.VisPanel;
 import algvis.ui.view.REL;
 
@@ -100,7 +101,10 @@ public class BSTFind extends Algorithm {
             pause();
             while (true) {
                 lastNode = w;
-                w.access();
+
+                CacheAccess ca = new CacheAccess(panel, this, w);
+                ca.runAlgorithm();
+
                 if (w.isLeaf() || found(w)) {
                     if (found(w)) {
                         found = true;

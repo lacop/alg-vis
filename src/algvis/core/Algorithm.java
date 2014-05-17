@@ -46,7 +46,7 @@ import java.util.concurrent.Semaphore;
  * (method myresume) after pressing the "Next" button.
  */
 abstract public class Algorithm implements Runnable {
-    private final VisPanel panel;
+    protected final VisPanel panel;
     private final Semaphore gate = new Semaphore(1);
     private volatile boolean done = false;
     private UpdatableStateEdit panelState;

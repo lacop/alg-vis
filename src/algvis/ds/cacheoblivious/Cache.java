@@ -12,7 +12,7 @@ public class Cache {
 
     private LinkedList<Integer> blocks;
 
-    private CachePanel panel;
+    public CachePanel panel;
 
     private int readCount = 0;
     private int accessCount = 0;

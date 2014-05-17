@@ -1,12 +1,15 @@
 package algvis.ds.cacheoblivious.statictree;
 
+import algvis.core.Algorithm;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.ds.cacheoblivious.Cache;
+import algvis.ds.cacheoblivious.CacheAccess;
 import algvis.ds.cacheoblivious.orderedfile.OrderedFileNode;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ui.Fonts;
+import algvis.ui.VisPanel;
 import algvis.ui.view.View;
 
 import java.awt.*;
@@ -35,27 +38,11 @@ public class StaticTreeNode extends BSTNode {
     public void setOrder(int i) {
         this.order = i;
     }
+    public int getOrder() { return this.order; }
 
     // TODO private + get/set
     public int orderedFileOffset;
     public int orderedFilePos;
-
-    @Override
-    public void access() {
-        Cache c = ((StaticTree) D).cache;
-
-        if (c != null) {
-            if (c.isLoaded(order)) {
-                setColor(NodeColor.GREEN); // cache hit
-            } else {
-                setColor(NodeColor.RED); // cache miss
-            }
-
-            int arrayY = ((StaticTree) D).arrayY;
-            int arrayX = getArrayX();
-            c.access(order);
-        }
-    }
 
     @Override
     public Color getBgColor() {

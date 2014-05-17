@@ -4,6 +4,7 @@ import algvis.core.DataStructure;
 import algvis.ds.cacheoblivious.statictree.StaticTree;
 import algvis.internationalization.ChLabel;
 import algvis.internationalization.IButton;
+import algvis.internationalization.ICheckBox;
 import algvis.internationalization.ILabel;
 import algvis.ui.VisPanel;
 import javafx.collections.ListChangeListener;
@@ -14,6 +15,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 public class CachePanel extends JPanel implements ActionListener, ChangeListener {
 
@@ -24,6 +26,7 @@ public class CachePanel extends JPanel implements ActionListener, ChangeListener
     protected JSpinner spinBlockSize;
     protected JSpinner spinBlockCount;
     protected IButton clear;
+    protected ICheckBox pause;
 
     public CachePanel(VisPanel panel) {
         this.panel = panel;
@@ -38,7 +41,7 @@ public class CachePanel extends JPanel implements ActionListener, ChangeListener
 
     private void initLayout() {
         JPanel settings = new JPanel();
-        setLayout(new FlowLayout());
+        settings.setLayout(new FlowLayout());
 
         settings.add(new ILabel("label-cache-blocksize"));
         spinBlockSize = new JSpinner(new SpinnerNumberModel(4, 1, 8, 1));
@@ -50,9 +53,19 @@ public class CachePanel extends JPanel implements ActionListener, ChangeListener
         spinBlockCount.addChangeListener(this);
         settings.add(spinBlockCount);
 
+
+        JPanel controls = new JPanel();
+        controls.setLayout(new FlowLayout());
+
+        pause = new ICheckBox("button-pause", true);
+        pause.addActionListener(this);
+        pause.setSelected(false);
+        controls.add(pause);
+
         clear = new IButton("button-cache-clear");
         clear.addActionListener(this);
-        settings.add(clear);
+        controls.add(clear);
+
 
         JPanel statsPanel = new JPanel();
         statsPanel.setLayout(new FlowLayout());
@@ -64,6 +77,7 @@ public class CachePanel extends JPanel implements ActionListener, ChangeListener
         setBorder(BorderFactory.createTitledBorder("Cache"));
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         add(settings);
+        add(controls);
         add(statsPanel);
     }
 
@@ -73,6 +87,10 @@ public class CachePanel extends JPanel implements ActionListener, ChangeListener
         } else {
             stats.setText("");
         }
+    }
+
+    public boolean pause() {
+        return pause.isSelected();
     }
 
     @Override
