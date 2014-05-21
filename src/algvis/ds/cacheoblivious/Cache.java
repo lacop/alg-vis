@@ -39,6 +39,22 @@ public class Cache {
         }
     }
 
+    public void setAligned(boolean aligned) {
+        if (this.aligned != aligned) {
+            clear();
+        }
+
+        this.aligned = aligned;
+    }
+
+    public boolean isBlockStart(int position) {
+        return aligned && ((position-1) % blockSize) == 0;
+    }
+
+    public boolean isBlockEnd(int position) {
+        return aligned && ((position-1) % blockSize) == blockSize - 1;
+    }
+
     public void clear() {
         blocks = new LinkedList<Integer>();
 
@@ -80,12 +96,10 @@ public class Cache {
     }
 
     public void load(int position) {
-        int blockStart;
+        int blockStart = position;
         if (aligned) {
             // Memory-aligned cache
-            blockStart = (position / blockSize) * blockSize;
-        } else {
-            blockStart = position;
+            blockStart -= (position - 1) % blockSize; // positions are 1-indexed
         }
 
         if (blocks.size() == blockCount) {

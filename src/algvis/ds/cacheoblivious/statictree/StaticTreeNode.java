@@ -80,12 +80,25 @@ public class StaticTreeNode extends BSTNode {
         super.drawBg(v);
 
         if (((StaticTree) D).drawArray) {
+            // Draw array memory order above tree
             int arrayY = ((StaticTree) D).arrayY;
             int arrayX = getArrayX();
             v.setColor(getBgColor());
             v.fillRect(arrayX, arrayY, Node.RADIUS, Node.RADIUS);
             v.setColor(getFgColor());
             v.drawRect(arrayX, arrayY, Node.RADIUS, Node.RADIUS);
+
+            // Draw separating lines for cache blocks
+            Cache cache = ((StaticTree) D).cache;
+            if (cache != null) {
+                int linesize = Node.RADIUS*2;
+                if (cache.isBlockStart(order)) {
+                    v.drawLine(arrayX-Node.RADIUS, arrayY-linesize, arrayX-Node.RADIUS, arrayY+linesize);
+                }
+                if (cache.isBlockEnd(order)) {
+                    v.drawLine(arrayX+Node.RADIUS, arrayY-linesize, arrayX+Node.RADIUS, arrayY+linesize);
+                }
+            }
         }
     }
 

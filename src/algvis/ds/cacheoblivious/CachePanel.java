@@ -27,6 +27,7 @@ public class CachePanel extends JPanel implements ActionListener, ChangeListener
     protected JSpinner spinBlockCount;
     protected IButton clear;
     protected ICheckBox pause;
+    protected ICheckBox aligned;
 
     public CachePanel(VisPanel panel) {
         this.panel = panel;
@@ -35,36 +36,39 @@ public class CachePanel extends JPanel implements ActionListener, ChangeListener
 
         initLayout();
 
-        D.cache = new Cache(this, (Integer) spinBlockSize.getValue(), (Integer) spinBlockCount.getValue(), false);
+        D.cache = new Cache(this, (Integer) spinBlockSize.getValue(), (Integer) spinBlockCount.getValue(), true);
         refresh();
     }
 
     private void initLayout() {
-        JPanel settings = new JPanel();
-        settings.setLayout(new FlowLayout());
+        JPanel first = new JPanel();
+        first.setLayout(new FlowLayout());
 
-        settings.add(new ILabel("label-cache-blocksize"));
+        first.add(new ILabel("label-cache-blocksize"));
         spinBlockSize = new JSpinner(new SpinnerNumberModel(4, 1, 8, 1));
         spinBlockSize.addChangeListener(this);
-        settings.add(spinBlockSize);
+        first.add(spinBlockSize);
 
-        settings.add(new ILabel("label-cache-blockcount"));
+        first.add(new ILabel("label-cache-blockcount"));
         spinBlockCount = new JSpinner(new SpinnerNumberModel(2, 1, 8, 1));
         spinBlockCount.addChangeListener(this);
-        settings.add(spinBlockCount);
-
-
-        JPanel controls = new JPanel();
-        controls.setLayout(new FlowLayout());
-
-        pause = new ICheckBox("button-pause", true);
-        pause.addActionListener(this);
-        pause.setSelected(false);
-        controls.add(pause);
+        first.add(spinBlockCount);
 
         clear = new IButton("button-cache-clear");
         clear.addActionListener(this);
-        controls.add(clear);
+        first.add(clear);
+
+
+        JPanel second = new JPanel();
+        second.setLayout(new FlowLayout());
+
+        pause = new ICheckBox("button-pause", false);
+        pause.addActionListener(this);
+        second.add(pause);
+
+        aligned = new ICheckBox("label-cache-aligned", true);
+        aligned.addActionListener(this);
+        second.add(aligned);
 
 
         JPanel statsPanel = new JPanel();
@@ -76,8 +80,8 @@ public class CachePanel extends JPanel implements ActionListener, ChangeListener
 
         setBorder(BorderFactory.createTitledBorder("Cache"));
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        add(settings);
-        add(controls);
+        add(first);
+        add(second);
         add(statsPanel);
     }
 
@@ -97,6 +101,8 @@ public class CachePanel extends JPanel implements ActionListener, ChangeListener
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == clear) {
             D.cache.clear();
+        } else if (e.getSource() == aligned) {
+            D.cache.setAligned(aligned.isSelected());
         }
     }
 
