@@ -103,6 +103,17 @@ public class StaticTreeNode extends BSTNode {
     }
 
     @Override
+    public int getKey() {
+        if (key == 0) {
+            return -INF;
+        }
+
+        return key;
+    }
+
+
+
+    @Override
     protected void drawKey(View v) {
         super.drawKey(v);
 

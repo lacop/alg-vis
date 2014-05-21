@@ -167,8 +167,10 @@ public class OrderedFileNode extends BSTNode {
         } else {
             double cellX = x - (leafSize - 1)*leafElementRadius;
             for (int i = 0; i < leafSize; i++) {
-                // Draw elements inside
-                v.drawString("" + leafElements[i], cellX + 2 * i * leafElementRadius, y, Fonts.NORMAL);
+                // Draw elements inside, ignore empty
+                if (leafElements[i] != 0) {
+                    v.drawString("" + leafElements[i], cellX + 2 * i * leafElementRadius, y, Fonts.NORMAL);
+                }
 
                 // Draw index underneath
                 v.drawString("" + (i + offset*leafSize), cellX + 2 * i * leafElementRadius, y + leafElementRadius*2, Fonts.TYPEWRITER);
