@@ -75,6 +75,8 @@ public class StaticTreeNode extends BSTNode {
         return pos*2*Node.RADIUS;
     }
 
+    int linesize = Node.RADIUS;
+
     @Override
     protected void drawBg(View v) {
         super.drawBg(v);
@@ -91,12 +93,11 @@ public class StaticTreeNode extends BSTNode {
             // Draw separating lines for cache blocks
             Cache cache = ((StaticTree) D).cache;
             if (cache != null) {
-                int linesize = Node.RADIUS*2;
                 if (cache.isBlockStart(order)) {
-                    v.drawLine(arrayX-Node.RADIUS, arrayY-linesize, arrayX-Node.RADIUS, arrayY+linesize);
+                    v.drawLine(arrayX-Node.RADIUS, arrayY-Node.RADIUS-linesize, arrayX-Node.RADIUS, arrayY+Node.RADIUS+linesize);
                 }
                 if (cache.isBlockEnd(order)) {
-                    v.drawLine(arrayX+Node.RADIUS, arrayY-linesize, arrayX+Node.RADIUS, arrayY+linesize);
+                    v.drawLine(arrayX+Node.RADIUS, arrayY-Node.RADIUS-linesize, arrayX+Node.RADIUS, arrayY+Node.RADIUS+linesize);
                 }
             }
         }
@@ -134,7 +135,7 @@ public class StaticTreeNode extends BSTNode {
 
         int arrayY = ((StaticTree) D).arrayY;
         int arrayX = getArrayX();
-        Rectangle2D array = new Rectangle2D.Double(arrayX-Node.RADIUS, arrayY-Node.RADIUS, 2*Node.RADIUS, 2*Node.RADIUS);
+        Rectangle2D array = new Rectangle2D.Double(arrayX-Node.RADIUS, arrayY-Node.RADIUS-linesize, 2*Node.RADIUS, 2*Node.RADIUS + 2*linesize);
         return array.createUnion(bb);
     }
 }
